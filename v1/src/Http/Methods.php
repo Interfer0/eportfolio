@@ -11,7 +11,7 @@ namespace Eportfolio\Http;
 
 class Methods
 {
-    /* 
+    /*
      * GET should return the requested resource(s)
      */
     const GET = "GET";
