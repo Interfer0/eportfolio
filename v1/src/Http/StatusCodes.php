@@ -6,7 +6,7 @@
  * Time: 12:14 PM
  */
 
-namespace Scholarship\Http;
+namespace Eportfolio\Http;
 
 
 class StatusCodes
