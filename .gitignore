@@ -58,3 +58,6 @@ fabric.properties
 
 ### .htaccess ###
 /v1/.htaccess
+
+### DatabaseCredentials ###
+/v1/src/Utilities/DatabaseCredentials.php
