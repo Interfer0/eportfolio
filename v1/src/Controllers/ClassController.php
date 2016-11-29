@@ -11,5 +11,13 @@ namespace Eportfolio\Controllers;
 
 class ClassController
 {
+    //get all classes
 
+    //get specific class
+
+    //post new class
+
+    //patch a existing class
+
+    //delete a class- well mark it as removed
 }

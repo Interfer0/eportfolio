@@ -11,5 +11,13 @@ namespace Eportfolio\Controllers;
 
 class GoalController
 {
+    //Get Goals
 
+    //Get Specific goal
+
+    //Post a goal
+
+    //Patch a goal
+
+    //delete a goal
 }
