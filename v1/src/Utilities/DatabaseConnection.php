@@ -4,7 +4,7 @@
  * User: iamcaptaincode
  */
 
-namespace Scholarship\Utilities;
+namespace Eportfolio\Utilities;
 
 
 use Eportfolio\Utilities\DatabaseCredentials;
@@ -13,7 +13,7 @@ class DatabaseConnection
 {
     private static $instance = null;
     private static $host = "localhost";
-    private static $dbname = "scholarship_dev";
+    private static $dbname = "W01288485";
     private static $user = DatabaseCredentials::getUSER;
     private static $pass = DatabaseCredentials::getPASS;
 
