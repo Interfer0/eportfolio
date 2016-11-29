@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6cd5880f-138d-40ff-8beb-33863c53b79b" name="icarus" url="http://icarus.cs.weber.edu/~db88485">
+        <fileTransfer host="icarus.cs.weber.edu" port="22" rootFolder="/home/db88485/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

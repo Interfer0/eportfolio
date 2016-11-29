@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="icarus">
+    <serverData>
+      <paths name="icarus">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/eportfolio" local="$PROJECT_DIR$" web="/eportfolio" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
