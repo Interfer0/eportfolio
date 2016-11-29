@@ -6,6 +6,9 @@
  * Date: 11/29/2016
  * Time: 9:12 AM
  */
+
+namespace Eportfolio\Controllers;
+
 class GoalController
 {
 
