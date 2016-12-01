@@ -11,5 +11,14 @@ namespace Eportfolio\Controllers;
 
 class ProjectController
 {
+    // get projects by class
+
+    //get project by id
+
+    //post project
+
+    //patch project
+
+    //delete project
 
 }

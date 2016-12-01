@@ -11,13 +11,23 @@ namespace Eportfolio\Controllers;
 
 class ClassController
 {
-    //get all classes
+    /*
+$handleGetClass = function($args){
+    return (new Eportfolio\Controllers\ClassController)->getClass($args);
+};
+$handleGetClassByID = function($args){
+    return (new Eportfolio\Controllers\ClassController)->getClassByID($args);
+};
+$handlePostClass = function($args){
+    return (new Eportfolio\Controllers\ClassController)->createClass($args);
+};
+$handlePatchClass = function($args){
+    return (new Eportfolio\Controllers\ClassController)->editClass($args);
+};
+$handleDeleteClass = function($args){
+    return (new Eportfolio\Controllers\ClassController)->deleteClass($args);
+};
+    */
 
-    //get specific class
 
-    //post new class
-
-    //patch a existing class
-
-    //delete a class- well mark it as removed
 }
