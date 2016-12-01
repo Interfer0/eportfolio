@@ -11,10 +11,28 @@ namespace Eportfolio\Controllers;
 
 class ClassController
 {
+    public function getClass($args)
+    {
+
+    }
+
+    public function getClassByID($args)
+    {
+
+    }
+
+    public function editClass($args)
+    {
+
+    }
+
+    public function deleteClass($args)
+    {
+
+    }
+
+
     /*
-$handleGetClass = function($args){
-    return (new Eportfolio\Controllers\ClassController)->getClass($args);
-};
 $handleGetClassByID = function($args){
     return (new Eportfolio\Controllers\ClassController)->getClassByID($args);
 };

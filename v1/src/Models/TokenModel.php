@@ -12,7 +12,7 @@ use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use \Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
-use \Scholarship\Http\StatusCodes;
+use \Eportfolio\Http\StatusCodes;
 
 class Token
 {

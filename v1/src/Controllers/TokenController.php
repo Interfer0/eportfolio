@@ -9,8 +9,8 @@
 
 namespace Eportfolio\Controllers;
 
-use Scholarship\Models\Token;
-use Scholarship\Http\StatusCodes;
+use Eportfolio\Models\TokenModel;
+use Eportfolio\Http\StatusCodes;
 
 class TokensController
 {
