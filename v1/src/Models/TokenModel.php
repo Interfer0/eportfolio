@@ -14,19 +14,17 @@ use \Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
 use \Eportfolio\Http\StatusCodes;
 
-class Token
+class TokenModel
 {
-    const ROLE_STUDENT = "Student";
-    const ROLE_FACULTY = "Faculty";
     private static $KEY = "cdf97907258bb76aebaa7d435992f6b94f6f8886de4d725036e38cc17420625dc23fc2856519a1b51937ce89502cbb309b3501dd3908b4ff0966ff49c8747dfc";   //TODO: Extract key to config file that is loaded on-run.
-    private static $lengthValid = 3600; // 1 Hour
+    private static $lengthValid = 9900; // 1 Hour
 
     /**
      * @var string Contains a standard JWT.
      */
     public $token = "";
 
-    public function buildToken($role, $username)
+    public function buildToken($username)
     {
         $tokenId = uniqid("", true);//TODO: Reset with MCrypt Enabled. //base64_encode(mcrypt_create_iv(32));
         $issuedAt = time();
@@ -40,7 +38,6 @@ class Token
             'nbf' => $notBefore,        // Not before
             'exp' => $expire,           // Expire
             'data' => [                  // Data related to the signer user
-                'role' => $role,
                 'username' => $username, // User name
             ]
         ];
@@ -69,15 +66,6 @@ class Token
         }
 
         return $tokenData;
-    }
-
-    public static function getRoleFromToken($jwt = null)
-    {
-        if ($jwt == null)
-            $jwt = self::getBearerTokenFromHeader();
-        $tokenData = static::extractTokenData($jwt);
-        $data = (array)$tokenData['data'];
-        return $data['role'];
     }
 
     public static function getUsernameFromToken($jwt = null)
