@@ -24,7 +24,7 @@ class DatabaseConnection
 
     }
 
-    public static function getInstance($user, $pass)
+    public static function getInstance()
     {
         if (!static::$instance === null) {
             return static::$instance;

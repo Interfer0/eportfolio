@@ -9,5 +9,5 @@
 global $user;
 global $pass;
 
-$user = "username";
-$pass = "password";
+$user = "W01288485";
+$pass = "Danielcs!";

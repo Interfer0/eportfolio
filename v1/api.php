@@ -7,6 +7,8 @@
  * Time: 9:06 AM
  */
 
+use Eportfolio\Http\Methods;
+
 
 require_once 'config.php';
 require_once 'vendor/autoload.php';
@@ -89,23 +91,23 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
 
     $r->addRoute('POST', $baseURI . '/tokens', $handlePostToken);
 
-    $r->addRoute('GET', $baseURI . '/class', $handleGetClass);
-    $r->addRoute('GET', $baseURI . '/class/{ID: \d+}', $handleGetClassByID);
-    $r->addRoute('POST', $baseURI . '/class/', $handlePostClass);
-    $r->addRoute('PATCH', $baseURI . '/class/{ID: \d+}', $handlePatchClass);
-    $r->addRoute('DELETE', $baseURI . '/class/{ID: \d+}', $handleDeleteClass);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class', $handleGetClass);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleGetClassByID);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class/', $handlePostClass);
+    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handlePatchClass);
+    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleDeleteClass);
 
-    $r->addRoute('GET', $baseURI . '/goal', $handleGetGoal);
-    $r->addRoute('GET', $baseURI . '/goal/{ID: \d+}', $handleGetGoalByID);
-    $r->addRoute('POST', $baseURI . '/goal/', $handlePostGoal);
-    $r->addRoute('PATCH', $baseURI . '/goal/{ID: \d+}', $handlePatchGoal);
-    $r->addRoute('DELETE', $baseURI . '/goal/{ID: \d+}', $handleDeleteGoal);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal', $handleGetGoal);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handleGetGoalByID);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/goal/', $handlePostGoal);
+    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handlePatchGoal);
+    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handleDeleteGoal);
 
-    $r->addRoute('GET', $baseURI . '/project', $handleGetProject);
-    $r->addRoute('GET', $baseURI . '/project/{ProjectID: \d+}', $handleGetProjectByID);
-    $r->addRoute('POST', $baseURI . '/project/', $handlePostProject);
-    $r->addRoute('PATCH', $baseURI . '/project/{ProjectID: \d+}', $handlePatchProject);
-    $r->addRoute('DELETE', $baseURI . '/project/{ProjectID: \d+}', $handleDeleteProject);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project', $handleGetProject);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handleGetProjectByID);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/project/', $handlePostProject);
+    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handlePatchProject);
+    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handleDeleteProject);
 
 });
 
