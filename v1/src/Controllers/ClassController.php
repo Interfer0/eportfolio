@@ -13,6 +13,7 @@ use Eportfolio\Models\Token;
 use Eportfolio\Http\StatusCodes;
 use Eportfolio\Models\TokenModel;
 use Eportfolio\Utilities\DatabaseConnection;
+use PDOException;
 
 
 class ClassController
@@ -40,9 +41,14 @@ class ClassController
     public function createClass($args)
     {
         //check if user is authorized
-        echo TokenModel::getUsernameFromToken();
+        if(TokenModel::getUsernameFromToken() != $args['USER'])
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
         //post the class
-
+        $this->postDBClass($args);
+        die();
     }
     public function editClass($args)
     {
@@ -114,5 +120,48 @@ class ClassController
             die();
         }
         return $rtn;
+    }
+
+    private function postDBClass($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        //$scholarshipID = $args['id'];
+        //$wNumber = Token::getUsernameFromToken();
+       // $timeframe = $input['timeframe'];
+        //$questionArray = $input['questions'];
+        //$responseArray = $input['responses'];
+        $stmtPostClass = $dbh->prepare("INSERT INTO Class (`classname`,`classnumber`,`classdescription`, `semester`, `grade`, `year`, `goal`,`outcome`,`userid`) VALUES (:CLASSNAME, :CLASSNUMBER, :CLASSDESCRIPTION, :SEMESTER, :GRADE, :YEAR, :GOAL, :OUTCOME, :USERID));");
+        $stmtPostClass->bindValues(':CLASSNAME', $input['classname']);
+        $stmtPostClass->bindValues(':CLASSNUMBER', $input['classnumber']);
+        $stmtPostClass->bindValues(':CLASSDESCRIPTION', $input['classdescription']);
+        $stmtPostClass->bindValues(':SEMESTER', $input['semester']);
+        $stmtPostClass->bindValues(':YEAR', $input['year']);
+        $stmtPostClass->bindValues(':GRADE', $input['grade']);
+        $stmtPostClass->bindValues(':SCHOOL', $input['school']);
+        $stmtPostClass->bindValues(':GOAL', $input['goal']);
+        $stmtPostClass->bindValues(':OUTCOME', $input['outcome']);
+        $stmtPostClass->bindValues(':USERID', $input['semester']);
+
+
+        /*"classid":"",
+    "classname":"French",
+    "classnumber":"FR 2013",
+    "classdescription":"Pardon my French",
+    "semester":"fall",
+    "year":"2016",
+    "grade":"F-",
+    "school":"Weber State",
+    "goal":"Not swear",
+    "outcome":"FUCK"*/
+        var_dump($stmtPostClass);
     }
 }

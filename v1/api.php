@@ -17,8 +17,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
 
     //Eportfolio routes
     $handlePostToken = function ($args) {
-        $tokenController = new \Eportfolio\Controllers\TokensController();
+
+        $tokenController = new \Eportfolio\Controllers\TokenController();
         //Is the data via a form?
+
         if (!empty($_POST['username'])) {
             $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
             $password = $_POST['password'] ?? "";
@@ -34,7 +36,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
                 exit();
             }
         }
-
         return $tokenController->buildToken($username, $password);
     };
 
@@ -43,6 +44,15 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     };
     $handleGetClassByID = function($args){
         return (new Eportfolio\Controllers\ClassController)->getClassByID($args);
+    };
+    $handleGetClassBySemester = function($args){
+        return (new Eportfolio\Controllers\ClassController)->getClassBySemester($args);
+    };
+    $handleGetClassBySchool = function($args){
+        return (new Eportfolio\Controllers\ClassController)->getClassBySchool($args);
+    };
+    $handleGetClassByYear = function($args){
+        return (new Eportfolio\Controllers\ClassController)->getClassByYear($args);
     };
     $handlePostClass = function($args){
         return (new Eportfolio\Controllers\ClassController)->createClass($args);
@@ -89,11 +99,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
         return (new Eportfolio\Controllers\ProjectController)->deleteProject($args);
     };
 
-    $r->addRoute('POST', $baseURI . '/tokens', $handlePostToken);
+    $r->addRoute('POST', $baseURI . '/token', $handlePostToken);
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class', $handleGetClass);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleGetClassByID);
-    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class/', $handlePostClass);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: \d+}', $handleGetClassByID);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: sem\w+}', $handleGetClassBySemester);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: sch\w+}', $handleGetClassBySchool);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: y\d+}', $handleGetClassByYear);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class', $handlePostClass);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handlePatchClass);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleDeleteClass);
 
