@@ -145,7 +145,7 @@ class ClassController
         $stmtPostClass->bindValues(':CLASSDESCRIPTION', $input['classdescription']);
         $stmtPostClass->bindValues(':SEMESTER', $input['semester']);
         $stmtPostClass->bindValues(':YEAR', $input['year']);
-        $stmtPostClass->bindValues(':GRADE', $input['grade']);
+        $stmtPostClass->bindValues(':GRADE', $input['grade']); 
         $stmtPostClass->bindValues(':SCHOOL', $input['school']);
         $stmtPostClass->bindValues(':GOAL', $input['goal']);
         $stmtPostClass->bindValues(':OUTCOME', $input['outcome']);
