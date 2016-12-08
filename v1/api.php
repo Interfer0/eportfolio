@@ -45,8 +45,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
         $pos = strpos($uri, '?');
         if ($pos !== false) {
             $uri = substr($uri, $pos+1);
+            $args['BY'] = $uri;
         }
-        $args['BY'] = $uri;
         return (new Eportfolio\Controllers\ClassController)->getClass($args);
     };
     $handleGetClassByID = function($args){
@@ -63,17 +63,18 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     };
 
 
-
-
-
     $handleGetGoal = function($args){
+        //get paramaters to pass into method for specific gets
+        $uri = $_SERVER['REQUEST_URI'];
+        $pos = strpos($uri, '?');
+        if ($pos !== false) {
+            $uri = substr($uri, $pos+1);
+            $args['BY'] = $uri;
+        }
         return (new Eportfolio\Controllers\GoalController)->getGoal($args);
     };
     $handleGetGoalByID = function($args){
         return (new Eportfolio\Controllers\GoalController)->getGoalByID($args);
-    };
-    $handleGetGoalByTerm = function($args){
-        return (new Eportfolio\Controllers\GoalController)->getGoalByTerm($args);
     };
     $handlePostGoal = function($args){
         return (new Eportfolio\Controllers\GoalController)->createGoal($args);
@@ -113,7 +114,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal', $handleGetGoal);
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ARG2: \d+}', $handleGetGoalByID);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ARG2: t[01]{1}}', $handleGetGoalByTerm);
     $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/goal', $handlePostGoal);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handlePatchGoal);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handleDeleteGoal);

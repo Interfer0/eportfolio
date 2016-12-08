@@ -21,15 +21,27 @@ class GoalController
     //Get Goals
     public function getGoal($args)
     {
+        //if paramaters were passed in the search
+        if(isset($args['BY']))
+        {
+            $pos = strpos($args['BY'], '=');
+            if ($pos !== false)
+            {
+                $column = strtolower(substr($args['BY'],0, $pos));
+                $row = strtolower(substr($args['BY'],$pos+1));
+            }
+            if($column != "longterm") //longterm is 0 for short term goal, 1 for long term goal
+            {
+                http_response_code(StatusCodes::BAD_REQUEST);
+                die("search not allowed!");
+            }
+            return $this->getDBGoalBy($args['USER'],$column, strip_tags($row));
+        }
         return $this->getDBGoal($args['USER']);
     }
     public function getGoalByID($args)
     {
         return $this->getDBGoalBy($args['USER'],"goalid", $args['ARG2']);
-    }
-    public function getGoalByTerm($args)
-    {
-        return $this->getDBGoalBy($args['USER'],"longterm", $this->adjuster("t",$args['ARG2']));
     }
 
     public function createGoal($args)

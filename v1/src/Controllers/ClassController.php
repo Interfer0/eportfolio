@@ -81,16 +81,6 @@ class ClassController
 
     }
 
-    private function adjuster(String $arg1, String $arg2)
-    {
-        $arg2 = strtolower($arg2);
-        $prefix = $arg1;
-        if (substr($arg2, 0, strlen($prefix)) == $prefix) {
-            $arg2 = substr($arg2, strlen($prefix));
-        }
-        return $arg2;
-    }
-
     private function checkInput($input)
     {
         if(
