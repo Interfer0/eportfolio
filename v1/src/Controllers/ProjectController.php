@@ -208,7 +208,7 @@ class ProjectController
 
         try{
             $stmtPatchGoal = $dbh->prepare("UPDATE Project SET projectname = :PROJECTNAME, projectdescription = :PROJECTDESCRIPTION,
-                                        projectlink = :PROJECTLINK
+                                        projectlink = :PROJECTLINK 
                                         WHERE projectid = :PROJECTID;");
             $stmtPatchGoal->bindValue(':PROJECTNAME', strip_tags($input['projectname']));
             $stmtPatchGoal->bindValue(':PROJECTDESCRIPTION', strip_tags($input['projectdescription']));
