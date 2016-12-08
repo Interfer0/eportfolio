@@ -60,9 +60,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $handlePatchClass = function($args){
         return (new Eportfolio\Controllers\ClassController)->editClass($args);
     };
-    $handleDeleteClass = function($args){
-        return (new Eportfolio\Controllers\ClassController)->deleteClass($args);
-    };
+
 
 
 
@@ -71,6 +69,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     };
     $handleGetGoalByID = function($args){
         return (new Eportfolio\Controllers\GoalController)->getGoalByID($args);
+    };
+    $handleGetGoalByTerm = function($args){
+        return (new Eportfolio\Controllers\GoalController)->getGoalByTerm($args);
     };
     $handlePostGoal = function($args){
         return (new Eportfolio\Controllers\GoalController)->createGoal($args);
@@ -108,17 +109,18 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: y\d+}', $handleGetClassByYear);
     $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class', $handlePostClass);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handlePatchClass);
-    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleDeleteClass);
+
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal', $handleGetGoal);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handleGetGoalByID);
-    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/goal/', $handlePostGoal);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ARG2: \d+}', $handleGetGoalByID);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal/{ARG2: t[01]{1}}', $handleGetGoalByTerm);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/goal', $handlePostGoal);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handlePatchGoal);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/goal/{ID: \d+}', $handleDeleteGoal);
 
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project', $handleGetProject);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handleGetProjectByID);
-    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/project/', $handlePostProject);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{CLASS: \d+}/project', $handleGetProject);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handleGetProjectByID);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}}/class/{CLASS: \d+}/project', $handlePostProject);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handlePatchProject);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handleDeleteProject);
 

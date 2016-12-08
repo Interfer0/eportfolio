@@ -39,11 +39,12 @@ class TokenController
             die();
         }
         $user = $stmtToken->fetch(\PDO::FETCH_ASSOC);
-
+        //echo password_hash($password, PASSWORD_DEFAULT);
         if (password_verify($password, $user['userhash']) != 1) {
             http_response_code(StatusCodes::UNAUTHORIZED);
             die();
         }
+
         return (new TokenModel())->buildToken($username);
 
     }

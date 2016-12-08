@@ -47,19 +47,22 @@ class ClassController
             die();
         }
         //post the class
-        $this->postDBClass($args);
-        die();
+        return $this->postDBClass($args);
+
     }
     public function editClass($args)
     {
         //check if user is authorized
+        if(TokenModel::getUsernameFromToken() != $args['USER'])
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+        //post the class
+        return $this->patchDBClass($args);
 
-        //patch the class
     }
-    public function deleteClass($args)
-    {
 
-    }
 
     private function adjuster(String $arg1, String $arg2)
     {
@@ -69,6 +72,44 @@ class ClassController
             $arg2 = substr($arg2, strlen($prefix));
         }
         return $arg2;
+    }
+
+    private function checkInput($input)
+    {
+        if(
+            !isset($input["classname"]) ||
+            !isset($input["classnumber"]) ||
+            !isset($input["classdescription"]) ||
+            !isset($input["semester"]) ||
+            !isset($input["year"]) ||
+            !isset($input["grade"]) ||
+            !isset($input["school"]) ||
+            !isset($input["goal"]) ||
+            !isset($input["outcome"])
+        )
+        {
+            http_response_code(StatusCodes::BAD_REQUEST);
+            die("check your input JSON and try again");
+        }
+        return $input;
+    }
+
+    private function getUserID($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
+
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM  User WHERE username =:USER");
+        $stmtGetClasses->bindValue(':USER', $args['USER']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        return $rtn['userid'];
     }
 
     private function getDBClass(String $user)
@@ -133,26 +174,86 @@ class ClassController
         }
 
         $input = json_decode(file_get_contents('php://input'), true);
+        $input = $this->checkInput($input);
 
-        //$scholarshipID = $args['id'];
-        //$wNumber = Token::getUsernameFromToken();
-       // $timeframe = $input['timeframe'];
-        //$questionArray = $input['questions'];
-        //$responseArray = $input['responses'];
-        $stmtPostClass = $dbh->prepare("INSERT INTO Class (`classname`,`classnumber`,`classdescription`, `semester`, `grade`, `year`, `goal`,`outcome`,`userid`) VALUES (:CLASSNAME, :CLASSNUMBER, :CLASSDESCRIPTION, :SEMESTER, :GRADE, :YEAR, :GOAL, :OUTCOME, :USERID));");
-        $stmtPostClass->bindValues(':CLASSNAME', $input['classname']);
-        $stmtPostClass->bindValues(':CLASSNUMBER', $input['classnumber']);
-        $stmtPostClass->bindValues(':CLASSDESCRIPTION', $input['classdescription']);
-        $stmtPostClass->bindValues(':SEMESTER', $input['semester']);
-        $stmtPostClass->bindValues(':YEAR', $input['year']);
-        $stmtPostClass->bindValues(':GRADE', $input['grade']); 
-        $stmtPostClass->bindValues(':SCHOOL', $input['school']);
-        $stmtPostClass->bindValues(':GOAL', $input['goal']);
-        $stmtPostClass->bindValues(':OUTCOME', $input['outcome']);
-        $stmtPostClass->bindValues(':USERID', $input['semester']);
+        try {
+            $stmtPostClass = $dbh->prepare("INSERT INTO Class (`classname`,`classnumber`,`classdescription`, `semester`, `grade`, `year`,`school`, `goal`,`outcome`,`userid`,`active`) VALUES (:CLASSNAME, :CLASSNUMBER, :CLASSDESCRIPTION, :SEMESTER, :GRADE, :YEAR, :SCHOOL, :GOAL, :OUTCOME, :USERID, 1);");
+            $stmtPostClass->bindValue(':CLASSNAME', strip_tags($input['classname']));
+            $stmtPostClass->bindValue(':CLASSNUMBER', strip_tags($input['classnumber']));
+            $stmtPostClass->bindValue(':CLASSDESCRIPTION', strip_tags($input['classdescription']));
+            $stmtPostClass->bindValue(':SEMESTER', strip_tags($input['semester']));
+            $stmtPostClass->bindValue(':GRADE', strip_tags($input['grade']));
+            $stmtPostClass->bindValue(':YEAR', strip_tags($input['year']));
+            $stmtPostClass->bindValue(':SCHOOL', strip_tags($input['school']));
+            $stmtPostClass->bindValue(':GOAL', strip_tags($input['goal']));
+            $stmtPostClass->bindValue(':OUTCOME', strip_tags($input['outcome']));
+            $stmtPostClass->bindValue(':USERID', $this->getUserID($args));
+            $stmtPostClass->execute();
+        } catch(PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die("check your input JSON and try again");
+        }
+        http_response_code(StatusCodes::CREATED);
+        return "";
+    }
 
+    private function patchDBClass($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
 
-        /*"classid":"",
+        $input = json_decode(file_get_contents('php://input'), true);
+        $input = $this->checkInput($input);
+
+        $user = $this->getUserID($args);
+
+        //check if the User owns the class and that the class even exists
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
+        $stmtGetClasses->bindValue(':USER', $user);
+        $stmtGetClasses->bindValue(':CLASSID', $args['ID']);
+        $stmtGetClasses->execute();
+        $rtn = array();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        if($rtn == false)
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+
+        try{
+        $stmtPatchClass = $dbh->prepare("UPDATE Class SET classname = :CLASSNAME, classnumber = :CLASSNUMBER,
+                                        classdescription = :CLASSDESCRIPTION, semester = :SEMESTER,
+                                        grade = :GRADE, school = :SCHOOL, year = :YEAR ,
+                                        goal = :GOAL,outcome = :OUTCOME,
+                                        userid = :USERID
+                                        WHERE classid = :CLASSID;");
+        $stmtPatchClass->bindValue(':CLASSNAME', strip_tags($input['classname']));
+        $stmtPatchClass->bindValue(':CLASSNUMBER', strip_tags($input['classnumber']));
+        $stmtPatchClass->bindValue(':CLASSDESCRIPTION', strip_tags($input['classdescription']));
+        $stmtPatchClass->bindValue(':SEMESTER', strip_tags($input['semester']));
+        $stmtPatchClass->bindValue(':YEAR', strip_tags($input['year']));
+        $stmtPatchClass->bindValue(':GRADE', strip_tags($input['grade']));
+        $stmtPatchClass->bindValue(':SCHOOL', strip_tags($input['school']));
+        $stmtPatchClass->bindValue(':GOAL', strip_tags($input['goal']));
+        $stmtPatchClass->bindValue(':OUTCOME', strip_tags($input['outcome']));
+        $stmtPatchClass->bindValue(':USERID', $user);
+        $stmtPatchClass->bindValue(':CLASSID', $args['ID']);
+        $stmtPatchClass->execute();
+        } catch(PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die("check your input JSON and try again");
+        }
+        http_response_code(StatusCodes::OK);
+        return "";
+        /*
+     {
     "classname":"French",
     "classnumber":"FR 2013",
     "classdescription":"Pardon my French",
@@ -160,8 +261,10 @@ class ClassController
     "year":"2016",
     "grade":"F-",
     "school":"Weber State",
-    "goal":"Not swear",
-    "outcome":"FUCK"*/
-        var_dump($stmtPostClass);
+    "goal":"Not swear!",
+    "outcome":"FUCK"
+    }
+        */
+
     }
 }

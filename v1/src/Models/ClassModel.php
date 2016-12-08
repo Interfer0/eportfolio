@@ -48,7 +48,6 @@ class ClassModel implements \JSONSerializable
         $this->outcome = $args['outcome'];
     }
 
-
     function jsonSerialize()
     {
         $rtn = array('classid' => $this->classid,
