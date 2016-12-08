@@ -44,6 +44,7 @@ class GoalController
         return $this->postDBGoal($args);
 
     }
+
     public function editGoal($args)
     {
         //check if user is authorized
@@ -54,6 +55,19 @@ class GoalController
         }
         //post the class
         return $this->patchDBGoal($args);
+
+    }
+
+    public function deleteGoal($args)
+    {
+        //check if user is authorized
+        if(TokenModel::getUsernameFromToken() != $args['USER'])
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+        //post the class
+        return $this->deleteDBGoal($args);
 
     }
 
@@ -181,17 +195,22 @@ class GoalController
             $stmtPostClass->bindValue(':LONGTERM', strip_tags($input['longterm']));
             $stmtPostClass->bindValue(':GOALNAME', strip_tags($input['goalname']));
             $stmtPostClass->bindValue(':GOALDESCRIPTION', strip_tags($input['goaldescription']));
-            $stmtPostClass->bindValue(':TARGETDATE', strip_tags(['targetdate']));
+            $stmtPostClass->bindValue(':TARGETDATE', strip_tags($input['targetdate']));
             $stmtPostClass->bindValue(':COMPLETEDATE', strip_tags($input['completedate']));
             $stmtPostClass->bindValue(':USERID', $this->getUserID($args));
             $stmtPostClass->execute();
+            $rtnid = $dbh->lastInsertId();
         } catch(PDOException $e)
         {
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Goal WHERE goalid =:GOALID");
+        $stmtGetClasses->bindValue(':GOALID', $rtnid);
+        $stmtGetClasses->execute();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
         http_response_code(StatusCodes::CREATED);
-        return;
+        return new GoalModel($rtn);
     }
 
     private function patchDBGoal($args)
@@ -239,8 +258,15 @@ class GoalController
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Goal WHERE  goalid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
         http_response_code(StatusCodes::OK);
-        return;
+        return new GoalModel($rtn);
         /*
 {
 
@@ -255,6 +281,49 @@ class GoalController
 
     }
 
+    private function deleteDBGoal($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
 
-    //delete a goal
+        $user = $this->getUserID($args);
+
+        //check if the User owns the class and that the class even exists
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Goal WHERE userid =:USER AND goalid = :GOALID");
+        $stmtGetClasses->bindValue(':USER', $user);
+        $stmtGetClasses->bindValue(':GOALID', $args['ID']);
+        $stmtGetClasses->execute();
+        $rtn = array();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        if($rtn == false)
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+
+        try {
+            $stmtDeleteClass = $dbh->prepare("UPDATE Goal SET active = 0
+                                        WHERE goalid = :GOALID;");
+            $stmtDeleteClass->bindValue(':GOALID', $args['ID']);
+            $stmtDeleteClass->execute();
+        } catch(PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die("check your input JSON and try again");
+        }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Goal WHERE  goalid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
+        http_response_code(StatusCodes::OK);
+        return new GoalModel($rtn);
+    }
 }

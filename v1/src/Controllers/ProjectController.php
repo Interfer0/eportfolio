@@ -52,7 +52,19 @@ class ProjectController
         return $this->patchDBProject($args);
 
     }
+    public function deleteProject($args)
+    {
+        var_dump($args);
+        //check if user is authorized
+        if(TokenModel::getUsernameFromToken() != $args['USER'])
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+        //post the class
+        return $this->deleteDBProject($args);
 
+    }
 
     private function adjuster(String $arg1, String $arg2)
     {
@@ -172,13 +184,18 @@ class ProjectController
             $stmtPostClass->bindValue(':PROJECTDESCRIPTION', strip_tags($input['projectdescription']));
             $stmtPostClass->bindValue(':PROJECTLINK', strip_tags($input['projectlink']));
             $stmtPostClass->execute();
+            $rtnid = $dbh->lastInsertId();
         } catch(PDOException $e)
         {
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Project WHERE projectid =:PROJECTID");
+        $stmtGetClasses->bindValue(':PROJECTID', $rtnid);
+        $stmtGetClasses->execute();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
         http_response_code(StatusCodes::CREATED);
-        return;
+        return new ProjectModel($rtn);
     }
 
     private function patchDBProject($args)
@@ -220,8 +237,15 @@ class ProjectController
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Project WHERE  projectid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['PROJECTID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
         http_response_code(StatusCodes::OK);
-        return;
+        return new ProjectModel($rtn);
         /*
 {
 
@@ -236,7 +260,49 @@ class ProjectController
 
     }
 
+    private function deleteDBProject($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
 
-    //delete a goal
+        $user = $this->getUserID($args);
+
+        //check if the User owns the class and that the class even exists
+        $stmtVerify = $dbh->prepare("SELECT * FROM Project WHERE projectid =:PROJECT");
+        $stmtVerify->bindValue(':PROJECT', $args['PROJECTID']);
+        $stmtVerify->execute();
+        $rtn = array();
+        $rtn = $stmtVerify->fetch(\PDO::FETCH_ASSOC);
+        if($rtn == false)
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+
+        try {
+            $stmtDeleteClass = $dbh->prepare("UPDATE Project SET active = 0
+                                        WHERE projectid = :PROJECTID;");
+            $stmtDeleteClass->bindValue(':PROJECTID', $args['PROJECTID']);
+            $stmtDeleteClass->execute();
+        } catch(PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die("check your input JSON and try again");
+        }
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Project WHERE  projectid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['PROJECTID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
+        http_response_code(StatusCodes::OK);
+        return new ProjectModel($rtn);
+    }
 }
 

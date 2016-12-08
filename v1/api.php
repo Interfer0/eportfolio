@@ -40,19 +40,17 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     };
 
     $handleGetClass = function($args){
+        //get paramaters to pass into method for specific gets
+        $uri = $_SERVER['REQUEST_URI'];
+        $pos = strpos($uri, '?');
+        if ($pos !== false) {
+            $uri = substr($uri, $pos+1);
+        }
+        $args['BY'] = $uri;
         return (new Eportfolio\Controllers\ClassController)->getClass($args);
     };
     $handleGetClassByID = function($args){
         return (new Eportfolio\Controllers\ClassController)->getClassByID($args);
-    };
-    $handleGetClassBySemester = function($args){
-        return (new Eportfolio\Controllers\ClassController)->getClassBySemester($args);
-    };
-    $handleGetClassBySchool = function($args){
-        return (new Eportfolio\Controllers\ClassController)->getClassBySchool($args);
-    };
-    $handleGetClassByYear = function($args){
-        return (new Eportfolio\Controllers\ClassController)->getClassByYear($args);
     };
     $handlePostClass = function($args){
         return (new Eportfolio\Controllers\ClassController)->createClass($args);
@@ -60,6 +58,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $handlePatchClass = function($args){
         return (new Eportfolio\Controllers\ClassController)->editClass($args);
     };
+    $handleDeleteClass = function($args){
+        return (new Eportfolio\Controllers\ClassController)->deleteClass($args);
+    };
+
 
 
 
@@ -104,11 +106,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class', $handleGetClass);
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: \d+}', $handleGetClassByID);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: sem\w+}', $handleGetClassBySemester);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: sch\w+}', $handleGetClassBySchool);
-    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{ARG2: y\d+}', $handleGetClassByYear);
     $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class', $handlePostClass);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handlePatchClass);
+    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/class/{ID: \d+}', $handleDeleteClass);
 
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/goal', $handleGetGoal);
@@ -124,7 +124,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handlePatchProject);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handleDeleteProject);
 
+
 });
+
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];

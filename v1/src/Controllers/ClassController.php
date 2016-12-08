@@ -20,23 +20,29 @@ class ClassController
 {
     public function getClass($args)
     {
+        //if paramaters were passed in the search
+        if(isset($args['BY']))
+        {
+            $pos = strpos($args['BY'], '=');
+            if ($pos !== false)
+            {
+                $column = strtolower(substr($args['BY'],0, $pos));
+                $row = strtolower(substr($args['BY'],$pos+1));
+            }
+            if($column != "semester" &&
+                $column != "year"&&
+                $column != "school")
+            {
+                http_response_code(StatusCodes::BAD_REQUEST);
+                die("search not allowed!");
+            }
+            return $this->getDBClassBy($args['USER'],$column, strip_tags($row));
+        }
         return $this->getDBClass($args['USER']);
     }
     public function getClassByID($args)
     {
         return $this->getDBClassBy($args['USER'],"classid", $args['ARG2']);
-    }
-    public function getClassBySemester($args)
-    {
-        return $this->getDBClassBy($args['USER'],"semester", $this->adjuster("sem",$args['ARG2']));
-    }
-    public function getClassBySchool($args)
-    {
-        return $this->getDBClassBy($args['USER'],"school", $this->adjuster("sch",$args['ARG2']));
-    }
-    public function getClassByYear($args)
-    {
-        return $this->getDBClassBy($args['USER'],"year", $this->adjuster("y",$args['ARG2']));
     }
     public function createClass($args)
     {
@@ -62,7 +68,18 @@ class ClassController
         return $this->patchDBClass($args);
 
     }
+    public function deleteClass($args)
+    {
+        //check if user is authorized
+        if(TokenModel::getUsernameFromToken() != $args['USER'])
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+        //post the class
+        return $this->deleteDBClass($args);
 
+    }
 
     private function adjuster(String $arg1, String $arg2)
     {
@@ -189,13 +206,20 @@ class ClassController
             $stmtPostClass->bindValue(':OUTCOME', strip_tags($input['outcome']));
             $stmtPostClass->bindValue(':USERID', $this->getUserID($args));
             $stmtPostClass->execute();
+            $rtnid = $dbh->lastInsertId();
         } catch(PDOException $e)
         {
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE classid =:CLASSID");
+        $stmtGetClasses->bindValue(':CLASSID', $rtnid);
+        $stmtGetClasses->execute();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
         http_response_code(StatusCodes::CREATED);
-        return;
+        return new ClassModel($rtn);
+
     }
 
     private function patchDBClass($args)
@@ -250,8 +274,17 @@ class ClassController
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die("check your input JSON and try again");
         }
+
+
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
         http_response_code(StatusCodes::OK);
-        return;
+        return new ClassModel($rtn);
         /*
      {
     "classname":"French",
@@ -266,5 +299,52 @@ class ClassController
     }
         */
 
+    }
+
+    private function deleteDBClass($args)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
+
+        $user = $this->getUserID($args);
+
+        //check if the User owns the class and that the class even exists
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
+        $stmtGetClasses->bindValue(':USER', $user);
+        $stmtGetClasses->bindValue(':CLASSID', $args['ID']);
+        $stmtGetClasses->execute();
+        $rtn = array();
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        if($rtn == false)
+        {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            die();
+        }
+
+        try {
+            $stmtDeleteClass = $dbh->prepare("UPDATE Class SET active = 0
+                                        WHERE classid = :CLASSID;");
+            $stmtDeleteClass->bindValue(':CLASSID', $args['ID']);
+            $test = $stmtDeleteClass->execute();
+        } catch(PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die("check your input JSON and try again");
+        }
+
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
+        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
+        $stmtGetClasses->execute();
+
+        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+
+
+        http_response_code(StatusCodes::OK);
+        return new ClassModel($rtn);
     }
 }
