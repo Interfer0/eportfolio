@@ -195,7 +195,7 @@ class ClassController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::CREATED);
-        return "";
+        return;
     }
 
     private function patchDBClass($args)
@@ -251,7 +251,7 @@ class ClassController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::OK);
-        return "";
+        return;
         /*
      {
     "classname":"French",

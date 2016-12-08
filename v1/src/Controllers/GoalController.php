@@ -191,7 +191,7 @@ class GoalController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::CREATED);
-        return " ";
+        return;
     }
 
     private function patchDBGoal($args)
@@ -240,7 +240,7 @@ class GoalController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::OK);
-        return "";
+        return;
         /*
 {
 

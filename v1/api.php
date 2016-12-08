@@ -120,9 +120,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class/{CLASS: \d+}/project', $handleGetProject);
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handleGetProjectByID);
-    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}}/class/{CLASS: \d+}/project', $handlePostProject);
-    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handlePatchProject);
-    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{ProjectID: \d+}', $handleDeleteProject);
+    $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class/{CLASS: \d+}/project', $handlePostProject);
+    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handlePatchProject);
+    $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handleDeleteProject);
 
 });
 

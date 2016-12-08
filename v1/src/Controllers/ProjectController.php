@@ -25,7 +25,7 @@ class ProjectController
     }
     public function getProjectByID($args)
     {
-        return $this->getDBProjectBy($args['CLASS'],"projectid", $args['PROJECTID']);
+        return $this->getDBProjectBy($args['USER'],"projectid", $args['PROJECTID']);
     }
 
     public function createProject($args)
@@ -66,24 +66,18 @@ class ProjectController
 
     private function checkInput($input)
     {
-        if(!isset($input["completedate"]))
+        if (!isset($input["projectlink"]))
         {
-            $input['completedate'] = "";
+            $input['projectlink'] = "";
         }
         if(
-            !isset($input["longterm"]) ||
-            !isset($input["goalname"]) ||
-            !isset($input["goaldescription"]) ||
-            !isset($input["targetdate"])
+            !isset($input["projectname"]) ||
+            !isset($input["projectdescription"]) ||
+            !isset($input["projectlink"])
         )
         {
             http_response_code(StatusCodes::BAD_REQUEST);
             die("check your input JSON and try again");
-        }
-        if(strcmp($input['longterm'],'0') != 0 && strcmp($input['longterm'],'1') != 0 )
-        {
-            http_response_code(StatusCodes::BAD_REQUEST);
-            die("longterm must be 0 for short term or 1 for long term");
         }
         return $input;
     }
@@ -133,7 +127,7 @@ class ProjectController
     }
 
     //Get Specific by
-    private function getDBGoalBy(String $user,String $arg1, String $arg2)
+    private function getDBProjectBy(String $user,String $arg1, String $arg2)
     {
         try{
             $dbh = DatabaseConnection::getInstance();
@@ -142,14 +136,13 @@ class ProjectController
             http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
             die();
         }
-        $stmtGet = $dbh->prepare("SELECT * FROM Project P INNER JOIN Class C on C.classid = P.classid WHERE C.classid =:CLASS AND {$arg1} = :ARG2 AND G.active = 1");
-        $stmtGet->bindValue(':CLASS', $user);
+        $stmtGet = $dbh->prepare("SELECT * FROM Project P WHERE  {$arg1} = :ARG2 AND P.active = 1");
         $stmtGet->bindValue(':ARG2', $arg2);
         $stmtGet->execute();
         $rtn = array();
         while($now = $stmtGet->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new GoalModel($now);
+            $rtn[] = new ProjectModel($now);
         }
         if(count($rtn) == 0)
         {
@@ -159,7 +152,7 @@ class ProjectController
         return $rtn;
     }
 
-    private function postDBGoal($args)
+    private function postDBProject($args)
     {
         try{
             $dbh = DatabaseConnection::getInstance();
@@ -173,13 +166,11 @@ class ProjectController
         $input = $this->checkInput($input);
 
         try {
-            $stmtPostClass = $dbh->prepare("INSERT INTO Goal (`longterm`,`goalname`,`goaldescription`, `targetdate`, `completedate`, `userid`) VALUES (:LONGTERM, :GOALNAME, :GOALDESCRIPTION, :TARGETDATE, :COMPLETEDATE, :USERID);");
-            $stmtPostClass->bindValue(':LONGTERM', strip_tags($input['longterm']));
-            $stmtPostClass->bindValue(':GOALNAME', strip_tags($input['goalname']));
-            $stmtPostClass->bindValue(':GOALDESCRIPTION', strip_tags($input['goaldescription']));
-            $stmtPostClass->bindValue(':TARGETDATE', strip_tags(['targetdate']));
-            $stmtPostClass->bindValue(':COMPLETEDATE', strip_tags($input['completedate']));
-            $stmtPostClass->bindValue(':USERID', $this->getUserID($args));
+            $stmtPostClass = $dbh->prepare("INSERT INTO Project (`classid`,`projectname`,`projectdescription`, `projectlink`) VALUES (:CLASSID, :PROJECTNAME, :PROJECTDESCRIPTION, :PROJECTLINK);");
+            $stmtPostClass->bindValue(':CLASSID', $args['CLASS']);
+            $stmtPostClass->bindValue(':PROJECTNAME', strip_tags($input['projectname']));
+            $stmtPostClass->bindValue(':PROJECTDESCRIPTION', strip_tags($input['projectdescription']));
+            $stmtPostClass->bindValue(':PROJECTLINK', strip_tags($input['projectlink']));
             $stmtPostClass->execute();
         } catch(PDOException $e)
         {
@@ -187,10 +178,10 @@ class ProjectController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::CREATED);
-        return " ";
+        return;
     }
 
-    private function patchDBGoal($args)
+    private function patchDBProject($args)
     {
         try{
             $dbh = DatabaseConnection::getInstance();
@@ -203,12 +194,9 @@ class ProjectController
         $input = json_decode(file_get_contents('php://input'), true);
         $input = $this->checkInput($input);
 
-        $user = $this->getUserID($args);
-
-        //check if the User owns the GOAL and that the GOAL even exists
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Goal G WHERE userid =:USER AND goalid = :GOALID");
-        $stmtGetClasses->bindValue(':USER', $user);
-        $stmtGetClasses->bindValue(':GOALID', $args['ID']);
+        //check if the Class owns the GOAL and that the GOAL even exists
+        $stmtGetClasses = $dbh->prepare("SELECT * FROM Project WHERE projectid =:PROJECT");
+        $stmtGetClasses->bindValue(':PROJECT', $args['PROJECTID']);
         $stmtGetClasses->execute();
         $rtn = array();
         $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
@@ -219,16 +207,13 @@ class ProjectController
         }
 
         try{
-            $stmtPatchGoal = $dbh->prepare("UPDATE Goal SET longterm = :LONGTERM, goalname = :GOALNAME,
-                                        goaldescription = :GOALDESCRIPTION, targetdate = :TARGETDATE,
-                                        completedate = :COMPLETEDATE
-                                        WHERE goalid = :GOALID;");
-            $stmtPatchGoal->bindValue(':LONGTERM', strip_tags($input['longterm']));
-            $stmtPatchGoal->bindValue(':GOALNAME', strip_tags($input['goalname']));
-            $stmtPatchGoal->bindValue(':GOALDESCRIPTION', strip_tags($input['goaldescription']));
-            $stmtPatchGoal->bindValue(':TARGETDATE', strip_tags($input['targetdate']));
-            $stmtPatchGoal->bindValue(':COMPLETEDATE', strip_tags($input['completedate']));
-            $stmtPatchGoal->bindValue(':GOALID', strip_tags($args['ID']));
+            $stmtPatchGoal = $dbh->prepare("UPDATE Project SET projectname = :PROJECTNAME, projectdescription = :PROJECTDESCRIPTION,
+                                        projectlink = :PROJECTLINK
+                                        WHERE projectid = :PROJECTID;");
+            $stmtPatchGoal->bindValue(':PROJECTNAME', strip_tags($input['projectname']));
+            $stmtPatchGoal->bindValue(':PROJECTDESCRIPTION', strip_tags($input['projectdescription']));
+            $stmtPatchGoal->bindValue(':PROJECTLINK', strip_tags($input['projectlink']));
+            $stmtPatchGoal->bindValue(':PROJECTID', $args['PROJECTID']);
             $stmtPatchGoal->execute();
         } catch(PDOException $e)
         {
@@ -236,7 +221,7 @@ class ProjectController
             die("check your input JSON and try again");
         }
         http_response_code(StatusCodes::OK);
-        return "";
+        return;
         /*
 {
 
