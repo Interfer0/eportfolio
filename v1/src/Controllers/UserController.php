@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * Created by PhpStorm.
- * User: Daniel
- * Date: 12/11/2016
- * Time: 9:13 AM
+ * User: Daniel Bigelow
+ * for: CS 3620
+ * Date: 12/14/2016
  */
 
 namespace Eportfolio\Controllers;
@@ -17,6 +17,9 @@ use PDOException;
 
 class UserController
 {
+    /*
+     * Allows an admin to get a list of users
+     */
     public function getUser($args)
     {
         if(TokenModel::getAdminFromToken() !== '1')
@@ -27,6 +30,9 @@ class UserController
         return $this->getDBUser($args);
     }
 
+    /*
+     * allows an admin to get a user by their name
+     */
     public function getUserByName($args)
     {
         if(TokenModel::getAdminFromToken() !== '1')
@@ -37,7 +43,14 @@ class UserController
         return $this->getDBUserByName($args);
     }
 
-    //post user
+    /*
+     * Posts a new user. If not admins exist, user is created as an admin.
+     * Input JSON:
+     *   {
+     *       "username": "Labron",
+     *       "password": "Wilson"
+     *   }
+     */
     public function postUser($args)   //we only want admins to create accounts, this is a design feature. However the first account created should be allowed.
     {
         try{
@@ -63,12 +76,29 @@ class UserController
         }
 
     }
-    //patch user
+
+    /*
+     * Allows admin and users to change passwords and allows admin to set accounts to admin
+     * Input JSON:
+     *   {
+     *       "username": "Labron",
+     *       "password": "Wilson",
+     *       "admin":"0"
+     *   }
+     *               OR
+     *   {
+     *       "username": "Labron",
+     *       "password": "Wilson"
+     *   }
+     */
     public function patchUser($args)
     {
         return $this->patchDBUser($args);
     }
 
+    /*
+     * Checks a JSON for username and password
+     */
     private function checkInput($input)
     {
         if(
@@ -82,6 +112,9 @@ class UserController
         return $input;
     }
 
+    /*
+     * Handles database to get all users
+     */
     private function getDBUser($args)
     {
         try{
@@ -107,6 +140,9 @@ class UserController
         return $rtn;
     }
 
+    /*
+     * Handles database to get user by name
+     */
     private function getDBUserByName($args)
     {
         try{
@@ -133,6 +169,9 @@ class UserController
         return $rtn;
     }
 
+    /*
+     * Handles database to post a new user. Only admin can do this.
+     */
     private function postDBUser($args, Int $admin = 0)
     {
         try{
@@ -158,10 +197,8 @@ class UserController
         }
 
         //hash the password
-
         $password = password_hash(strip_tags($input['password']), PASSWORD_DEFAULT);
-        //echo strip_tags($input['username']);
-        //echo $password;
+
         try {
             $stmtPostClass = $dbh->prepare("INSERT INTO User (`username`,`userhash`,`admin`) VALUES (:USERNAME, :USERHASH, :ADMIN);");
             $stmtPostClass->bindValue(':USERNAME', strip_tags($input['username']));
@@ -180,15 +217,11 @@ class UserController
         $rtn = $stmtCheckUser->fetch(\PDO::FETCH_ASSOC);
         http_response_code(StatusCodes::CREATED);
         return new userModel($rtn);
-        /*
-        {
-            "username": "Labron",
-            "password": "Wilson",
-            "admin":"0"
-        }
-        */
     }
 
+    /*
+     * Handles patching a user. Uses old admin level if new one is not specified. Only lets admin set admin level
+     */
     private  function patchDBUser($args)
     {
         try{
@@ -222,18 +255,20 @@ class UserController
             die();
         }
         //if username is in token then override, otherwise get the one from the account from return of last call
-        if(!isSet($input['admin']))
-        {
+
+            if (!isSet($input['admin'])) {
                 $input['admin'] = $rtn['admin'];
 
-        } else    // ensure admin in JSON is either one or zero
-        {
-            if($input['admin'] != '0' && $input['admin'] != '1')
+            } else    // ensure admin in JSON is either one or zero
             {
-                http_response_code(StatusCodes::BAD_REQUEST);
-                die("check your input JSON and try again");
+                if(TokenModel::getAdminFromToken() == '1') { //allow
+                    if ($input['admin'] != '0' && $input['admin'] != '1')
+                    {
+                        http_response_code(StatusCodes::BAD_REQUEST);
+                        die("check your input JSON and try again");
+                    }
+                }
             }
-        }
         $password = password_hash(strip_tags($input['password']), PASSWORD_DEFAULT);
         try{
             $stmtPatchGoal = $dbh->prepare("UPDATE User SET userhash = :USERHASH, admin = :ADMIN

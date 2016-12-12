@@ -1,10 +1,9 @@
 <?php
-
-/**
+/*
  * Created by PhpStorm.
  * User: Daniel Bigelow
- * Date: 11/29/2016
- * Time: 9:12 AM
+ * for: CS 3620
+ * Date: 12/14/2016
  */
 
 namespace Eportfolio\Controllers;
@@ -15,6 +14,10 @@ use Eportfolio\Utilities\DatabaseConnection;
 
 class TokenController
 {
+    /*
+     * Builds a token from a username and password, either from POST or a JSON.
+     * Verifys password with Database HASH for user.
+     */
     public function buildToken(string $username, string $password)
     {
         try {

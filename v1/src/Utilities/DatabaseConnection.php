@@ -6,8 +6,7 @@
 
 namespace Eportfolio\Utilities;
 
-
-use Eportfolio\Utilities\DatabaseCredentials;
+use PDOException;
 
 require_once 'DatabaseCredentials.php';
 

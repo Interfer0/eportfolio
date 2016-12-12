@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * Created by PhpStorm.
- * User: Daniel
- * Date: 12/11/2016
- * Time: 9:36 AM
+ * User: Daniel Bigelow
+ * for: CS 3620
+ * Date: 12/14/2016
  */
 
 namespace Eportfolio\Models;

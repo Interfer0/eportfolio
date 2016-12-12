@@ -1,11 +1,11 @@
 <?
 
-    /**
-     * Created by PhpStorm.
-     * User: Daniel Bigelow
-     * Date: 11/29/2016
-     * Time: 9:12 AM
-     */
+/*
+ * Created by PhpStorm.
+ * User: Daniel Bigelow
+ * for: CS 3620
+ * Date: 12/14/2016
+ */
 
 namespace Eportfolio\Controllers;
 
@@ -28,6 +28,15 @@ class ProjectController
         return $this->getDBProjectBy($args['USER'],"projectid", $args['PROJECTID']);
     }
 
+    /*
+     * Creates a new Project belonging to a class
+     * Input:
+     *      {
+     *          "projectname":"Pipeline Project",
+     *          "projectdescription":"Calculate the most cost effective method for a pipeline",
+     *          "projectlink":"www.exxon.com"
+     *      }
+     */
     public function createProject($args)
     {
         //check if user is authorized
@@ -40,6 +49,16 @@ class ProjectController
         return $this->postDBProject($args);
 
     }
+
+    /*
+     * Patches a project
+     * Input:
+     *      {
+     *          "projectname":"Pipeline Project",
+     *          "projectdescription":"Calculate the most cost effective method for a pipeline",
+     *          "projectlink":"www.exxon.com"
+     *      }
+     */
     public function editProject($args)
     {
         //check if user is authorized
@@ -52,6 +71,10 @@ class ProjectController
         return $this->patchDBProject($args);
 
     }
+
+    /*
+     * Marks a project to inactive
+     */
     public function deleteProject($args)
     {
         var_dump($args);
@@ -61,21 +84,12 @@ class ProjectController
             http_response_code(StatusCodes::UNAUTHORIZED);
             die();
         }
-        //post the class
         return $this->deleteDBProject($args);
-
     }
 
-    private function adjuster(String $arg1, String $arg2)
-    {
-        $arg2 = strtolower($arg2);
-        $prefix = $arg1;
-        if (substr($arg2, 0, strlen($prefix)) == $prefix) {
-            $arg2 = substr($arg2, strlen($prefix));
-        }
-        return $arg2;
-    }
-
+    /*
+     *  checks in input JSON
+     */
     private function checkInput($input)
     {
         if (!isset($input["projectlink"]))
@@ -94,6 +108,9 @@ class ProjectController
         return $input;
     }
 
+    /*
+     *  Gets the users ID from their username
+     */
     private function getUserID($args)
     {
         try{
@@ -112,6 +129,9 @@ class ProjectController
         return $rtn['userid'];
     }
 
+    /*
+     * Handles database to get all projects for a class
+     */
     private function getDBProject(String $class)
     {
         try{
@@ -138,7 +158,9 @@ class ProjectController
         return $rtn;
     }
 
-    //Get Specific by
+    /*
+     * Gets a project by its ID
+     */
     private function getDBProjectBy(String $user,String $arg1, String $arg2)
     {
         try{
@@ -164,6 +186,9 @@ class ProjectController
         return $rtn;
     }
 
+    /*
+     * Handles posting a project for a class
+     */
     private function postDBProject($args)
     {
         try{
@@ -198,6 +223,9 @@ class ProjectController
         return new ProjectModel($rtn);
     }
 
+    /*
+     * Handles patching a Project
+     */
     private function patchDBProject($args)
     {
         try{
@@ -246,20 +274,11 @@ class ProjectController
 
         http_response_code(StatusCodes::OK);
         return new ProjectModel($rtn);
-        /*
-{
-
-    "longterm":"0",
-    "goalname":"Take Over World2",
-    "goaldescription":"The same thing we do every night",
-    "targetdate":"fall 2017",
-    "completedate":"summer 2019"
-
-}
-        */
-
     }
 
+    /*
+     * Handles database calls to mark class as inactive
+     */
     private function deleteDBProject($args)
     {
         try{
@@ -283,7 +302,6 @@ class ProjectController
             http_response_code(StatusCodes::UNAUTHORIZED);
             die();
         }
-
         try {
             $stmtDeleteClass = $dbh->prepare("UPDATE Project SET active = 0
                                         WHERE projectid = :PROJECTID;");
@@ -299,7 +317,6 @@ class ProjectController
         $stmtGetClasses->execute();
 
         $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
-
 
         http_response_code(StatusCodes::OK);
         return new ProjectModel($rtn);

@@ -1,10 +1,10 @@
 <?php
 
-/**
+/*
  * Created by PhpStorm.
  * User: Daniel Bigelow
- * Date: 11/29/2016
- * Time: 9:12 AM
+ * for: CS 3620
+ * Date: 12/14/2016
  */
 
 namespace Eportfolio\Controllers;
@@ -18,7 +18,10 @@ use PDOException;
 
 class GoalController
 {
-    //Get Goals
+    /*
+     *  Gets all Goals/ A;sp allows for search by longterm.
+     *  0 if short, 1 for long term goals
+     */
     public function getGoal($args)
     {
         //if paramaters were passed in the search
@@ -39,11 +42,27 @@ class GoalController
         }
         return $this->getDBGoal($args['USER']);
     }
+
+    /*
+     * Gets Goal by ID
+     */
     public function getGoalByID($args)
     {
         return $this->getDBGoalBy($args['USER'],"goalid", $args['ARG2']);
     }
 
+    /*
+     * Creates a new Goal
+     *
+     * Input JSON:
+     * {
+     *      "longterm":"0",
+     *      "goalname":"Take Over World2",
+     *      "goaldescription":"The same thing we do every night",
+     *      "targetdate":"fall 2017",
+     *      "completedate":"summer 2019"
+     *  }
+     */
     public function createGoal($args)
     {
         //check if user is authorized
@@ -57,6 +76,18 @@ class GoalController
 
     }
 
+    /*
+     * Edits a Goal
+     *
+     * Input JSON:
+     * {
+     *      "longterm":"0",
+     *      "goalname":"Take Over World2",
+     *      "goaldescription":"The same thing we do every night",
+     *      "targetdate":"fall 2017",
+     *      "completedate":"summer 2019"
+     *  }
+     */
     public function editGoal($args)
     {
         //check if user is authorized
@@ -70,6 +101,9 @@ class GoalController
 
     }
 
+    /*
+     * Marks a goal to be deleted
+     */
     public function deleteGoal($args)
     {
         //check if user is authorized
@@ -83,17 +117,9 @@ class GoalController
 
     }
 
-
-    private function adjuster(String $arg1, String $arg2)
-    {
-        $arg2 = strtolower($arg2);
-        $prefix = $arg1;
-        if (substr($arg2, 0, strlen($prefix)) == $prefix) {
-            $arg2 = substr($arg2, strlen($prefix));
-        }
-        return $arg2;
-    }
-
+    /*
+     * Checks the input Json to see if its all there
+     */
     private function checkInput($input)
     {
         if(!isset($input["completedate"]))
@@ -118,6 +144,9 @@ class GoalController
         return $input;
     }
 
+    /*
+     *  gets a users ID from a username
+     */
     private function getUserID($args)
     {
         try{
@@ -136,6 +165,9 @@ class GoalController
         return $rtn['userid'];
     }
 
+    /*
+     * Handles database work for getting all Goals
+     */
     private function getDBGoal(String $user)
     {
         try{
@@ -162,7 +194,9 @@ class GoalController
         return $rtn;
     }
 
-    //Get Specific by
+    /*
+     * Get a goal by a specific field
+     */
     private function getDBGoalBy(String $user,String $arg1, String $arg2)
     {
         try{
@@ -189,6 +223,9 @@ class GoalController
         return $rtn;
     }
 
+    /*
+     * Handles Database to Post a new Goal
+     */
     private function postDBGoal($args)
     {
         try{
@@ -225,6 +262,9 @@ class GoalController
         return new GoalModel($rtn);
     }
 
+    /*
+     * Handles a database to patch a goal
+     */
     private function patchDBGoal($args)
     {
         try{
@@ -279,20 +319,11 @@ class GoalController
 
         http_response_code(StatusCodes::OK);
         return new GoalModel($rtn);
-        /*
-{
-
-    "longterm":"0",
-    "goalname":"Take Over World2",
-    "goaldescription":"The same thing we do every night",
-    "targetdate":"fall 2017",
-    "completedate":"summer 2019"
-
-}
-        */
-
     }
 
+    /*
+     * handles database to mark a goal as inactive
+     */
     private function deleteDBGoal($args)
     {
         try{

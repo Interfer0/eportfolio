@@ -1,15 +1,15 @@
 <?php
 
-/**
+
+/*
  * Created by PhpStorm.
  * User: Daniel Bigelow
- * Date: 11/29/2016
- * Time: 9:11 AM
+ * for: CS 3620
+ * Date: 12/14/2016
  */
 
 namespace Eportfolio\Controllers;
 use Eportfolio\Models\ClassModel;
-use Eportfolio\Models\Token;
 use Eportfolio\Http\StatusCodes;
 use Eportfolio\Models\TokenModel;
 use Eportfolio\Utilities\DatabaseConnection;
@@ -18,6 +18,9 @@ use PDOException;
 
 class ClassController
 {
+    /*
+     * Gets all classes handles incoming search parameter
+     */
     public function getClass($args)
     {
         //if paramaters were passed in the search
@@ -40,10 +43,30 @@ class ClassController
         }
         return $this->getDBClass($args['USER']);
     }
+
+    /*
+     *  Gets Classes by ID
+     */
     public function getClassByID($args)
     {
         return $this->getDBClassBy($args['USER'],"classid", $args['ARG2']);
     }
+
+    /*
+     * Creates a new Class for the User
+     * JSON Format:
+     *      {
+     *          "classname":"French",
+     *          "classnumber":"FR 2013",
+     *          "classdescription":"Pardon my French",
+     *          "semester":"fall",
+     *          "year":"2016",
+     *          "grade":"F-",
+     *          "school":"Weber State",
+     *          "goal":"Not swear!",
+     *          "outcome":"Golden"
+     *      }
+     */
     public function createClass($args)
     {
         //check if user is authorized
@@ -54,8 +77,23 @@ class ClassController
         }
         //post the class
         return $this->postDBClass($args);
-
     }
+
+    /*
+     * Patch a class for a user
+     * JSON Format:
+     *      {
+     *          "classname":"French",
+     *          "classnumber":"FR 2013",
+     *          "classdescription":"Pardon my French",
+     *          "semester":"fall",
+     *          "year":"2016",
+     *          "grade":"F-",
+     *          "school":"Weber State",
+     *          "goal":"Not swear!",
+     *          "outcome":"Golden"
+     *      }
+     */
     public function editClass($args)
     {
         //check if user is authorized
@@ -68,6 +106,10 @@ class ClassController
         return $this->patchDBClass($args);
 
     }
+
+    /*
+     * Deletes a Class for a user. Well... it marks it as inactive rather than deleting it.
+     */
     public function deleteClass($args)
     {
         //check if user is authorized
@@ -81,6 +123,9 @@ class ClassController
 
     }
 
+    /*
+     * Check the Input Json to ensure all fields exist
+     */
     private function checkInput($input)
     {
         if(
@@ -101,6 +146,9 @@ class ClassController
         return $input;
     }
 
+    /*
+     * Gets a user ID from their username
+     */
     private function getUserID($args)
     {
         try{
@@ -111,14 +159,18 @@ class ClassController
             die();
         }
 
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM  User WHERE username =:USER");
-        $stmtGetClasses->bindValue(':USER', $args['USER']);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM  User WHERE username =:USER");
+        $stmtGetClass->bindValue(':USER', $args['USER']);
+        $stmtGetClass->execute();
 
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $rtn = $stmtGetClass->fetch(\PDO::FETCH_ASSOC);
         return $rtn['userid'];
     }
 
+    /*
+     * Database work for getting all classes
+     * Paramaters: $user = username
+     */
     private function getDBClass(String $user)
     {
         try{
@@ -129,36 +181,11 @@ class ClassController
             die();
         }
 
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C INNER JOIN User U on C.userid = U.userid WHERE username =:USER AND C.active = 1");
-        $stmtGetClasses->bindValue(':USER', $user);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C INNER JOIN User U on C.userid = U.userid WHERE username =:USER AND C.active = 1");
+        $stmtGetClass->bindValue(':USER', $user);
+        $stmtGetClass->execute();
         $rtn = array();
-        while($now = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC))
-        {
-            $rtn[] = new ClassModel($now);
-        }
-        if(count($rtn) == 0)
-        {
-            http_response_code(StatusCodes::BAD_REQUEST);
-            die();
-        }
-        return $rtn;
-    }
-    private function getDBClassBy(String $user,String $arg1, String $arg2)
-    {
-        try{
-            $dbh = DatabaseConnection::getInstance();
-        } catch (PDOException $e)
-        {
-            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
-            die();
-        }
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C INNER JOIN User U on C.userid = U.userid WHERE username =:USER AND {$arg1} = :ARG2 AND C.active = 1");
-        $stmtGetClasses->bindValue(':USER', $user);
-        $stmtGetClasses->bindValue(':ARG2', $arg2);
-        $stmtGetClasses->execute();
-        $rtn = array();
-        while($now = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC))
+        while($now = $stmtGetClass->fetch(\PDO::FETCH_ASSOC))
         {
             $rtn[] = new ClassModel($now);
         }
@@ -170,6 +197,43 @@ class ClassController
         return $rtn;
     }
 
+    /*
+     * Handles database work for getting class by an argument
+     * Paramaters:
+     *  $user = username
+     *  $arg1 = field to examine
+     *  $arg2 = string to match
+     *
+     */
+    private function getDBClassBy(String $user,String $arg1, String $arg2)
+    {
+        try{
+            $dbh = DatabaseConnection::getInstance();
+        } catch (PDOException $e)
+        {
+            http_response_code(StatusCodes::INTERNAL_SERVER_ERROR);
+            die();
+        }
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C INNER JOIN User U on C.userid = U.userid WHERE username =:USER AND {$arg1} = :ARG2 AND C.active = 1");
+        $stmtGetClass->bindValue(':USER', $user);
+        $stmtGetClass->bindValue(':ARG2', $arg2);
+        $stmtGetClass->execute();
+        $rtn = array();
+        while($now = $stmtGetClass->fetch(\PDO::FETCH_ASSOC))
+        {
+            $rtn[] = new ClassModel($now);
+        }
+        if(count($rtn) == 0)
+        {
+            http_response_code(StatusCodes::BAD_REQUEST);
+            die();
+        }
+        return $rtn;
+    }
+
+    /*
+     * Creates a new Class in the Database return the new class
+     */
     private function postDBClass($args)
     {
         try{
@@ -203,15 +267,19 @@ class ClassController
             die("check your input JSON and try again");
         }
 
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE classid =:CLASSID");
-        $stmtGetClasses->bindValue(':CLASSID', $rtnid);
-        $stmtGetClasses->execute();
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $stmtGetPost = $dbh->prepare("SELECT * FROM Class C WHERE classid =:CLASSID");
+        $stmtGetPost->bindValue(':CLASSID', $rtnid);
+        $stmtGetPost->execute();
+        $rtn = $stmtGetPost->fetch(\PDO::FETCH_ASSOC);
         http_response_code(StatusCodes::CREATED);
         return new ClassModel($rtn);
 
     }
 
+    /*
+     * Updates a database row with the new class information
+     * returns newly updated row
+     */
     private function patchDBClass($args)
     {
         try{
@@ -228,12 +296,12 @@ class ClassController
         $user = $this->getUserID($args);
 
         //check if the User owns the class and that the class even exists
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
-        $stmtGetClasses->bindValue(':USER', $user);
-        $stmtGetClasses->bindValue(':CLASSID', $args['ID']);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
+        $stmtGetClass->bindValue(':USER', $user);
+        $stmtGetClass->bindValue(':CLASSID', $args['ID']);
+        $stmtGetClass->execute();
         $rtn = array();
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $rtn = $stmtGetClass->fetch(\PDO::FETCH_ASSOC);
         if($rtn == false)
         {
             http_response_code(StatusCodes::UNAUTHORIZED);
@@ -266,31 +334,22 @@ class ClassController
         }
 
 
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
-        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
+        $stmtGetClass->bindValue(':ARG2', $args['ID']);
+        $stmtGetClass->execute();
 
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $rtn = $stmtGetClass->fetch(\PDO::FETCH_ASSOC);
 
 
         http_response_code(StatusCodes::OK);
         return new ClassModel($rtn);
-        /*
-     {
-    "classname":"French",
-    "classnumber":"FR 2013",
-    "classdescription":"Pardon my French",
-    "semester":"fall",
-    "year":"2016",
-    "grade":"F-",
-    "school":"Weber State",
-    "goal":"Not swear!",
-    "outcome":"FUCK"
-    }
-        */
 
     }
 
+    /*
+     * Marks a Class as inactive
+     * returns the deleted item
+     */
     private function deleteDBClass($args)
     {
         try{
@@ -304,12 +363,12 @@ class ClassController
         $user = $this->getUserID($args);
 
         //check if the User owns the class and that the class even exists
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
-        $stmtGetClasses->bindValue(':USER', $user);
-        $stmtGetClasses->bindValue(':CLASSID', $args['ID']);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C WHERE userid =:USER AND classid = :CLASSID");
+        $stmtGetClass->bindValue(':USER', $user);
+        $stmtGetClass->bindValue(':CLASSID', $args['ID']);
+        $stmtGetClass->execute();
         $rtn = array();
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $rtn = $stmtGetClass->fetch(\PDO::FETCH_ASSOC);
         if($rtn == false)
         {
             http_response_code(StatusCodes::UNAUTHORIZED);
@@ -327,11 +386,11 @@ class ClassController
             die("check your input JSON and try again");
         }
 
-        $stmtGetClasses = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
-        $stmtGetClasses->bindValue(':ARG2', $args['ID']);
-        $stmtGetClasses->execute();
+        $stmtGetClass = $dbh->prepare("SELECT * FROM Class C WHERE  classid = :ARG2");
+        $stmtGetClass->bindValue(':ARG2', $args['ID']);
+        $stmtGetClass->execute();
 
-        $rtn = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC);
+        $rtn = $stmtGetClass->fetch(\PDO::FETCH_ASSOC);
 
 
         http_response_code(StatusCodes::OK);

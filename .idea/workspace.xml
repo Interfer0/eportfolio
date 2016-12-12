@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="200445b1-7cb9-4837-8889-ae527e72ac66" name="Default" comment="">
+    <list default="true" id="200445b1-7cb9-4837-8889-ae527e72ac66" name="Default" comment="Class endpoint completed&#10;Goal endpoint completed except for delete&#10;Project endpoint started">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/api.php" afterPath="$PROJECT_DIR$/v1/api.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Controllers/ClassController.php" afterPath="$PROJECT_DIR$/v1/src/Controllers/ClassController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Controllers/GoalController.php" afterPath="$PROJECT_DIR$/v1/src/Controllers/GoalController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Controllers/ProjectController.php" afterPath="$PROJECT_DIR$/v1/src/Controllers/ProjectController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Controllers/TokenController.php" afterPath="$PROJECT_DIR$/v1/src/Controllers/TokenController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Controllers/UserController.php" afterPath="$PROJECT_DIR$/v1/src/Controllers/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Models/ClassModel.php" afterPath="$PROJECT_DIR$/v1/src/Models/ClassModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Models/GoalModel.php" afterPath="$PROJECT_DIR$/v1/src/Models/GoalModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Models/ProjectModel.php" afterPath="$PROJECT_DIR$/v1/src/Models/ProjectModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Models/UserModel.php" afterPath="$PROJECT_DIR$/v1/src/Models/UserModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Utilities/DatabaseConnection.php" afterPath="$PROJECT_DIR$/v1/src/Utilities/DatabaseConnection.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php" afterPath="$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php" />
     </list>
     <ignored path="eportfolio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,58 +39,21 @@
       <file leaf-file-name="ClassController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v1/src/Controllers/ClassController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="218" column="60" selection-start-line="218" selection-start-column="60" selection-end-line="218" selection-end-column="60" />
+            <state relative-caret-position="187">
+              <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
               <folding>
-                <element signature="e#7#99#0#PHP" expanded="true" />
-                <element signature="e#135#168#0#PHP" expanded="true" />
-                <marker date="1481164259003" expanded="true" signature="2852:2893" ph="SELECT * FRO... User" />
-                <marker date="1481164259003" expanded="true" signature="3392:3493" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="4219:4340" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="5217:5472" ph="INSERT INTO Class... " />
-                <marker date="1481164259003" expanded="true" signature="7121:7167" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="7121:7176" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="7121:7177" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="7121:7185" ph="SELECT * FRO... Class" />
-                <marker date="1481164259003" expanded="true" signature="7599:8051" ph="UPDATE Class... " />
-                <marker date="1481164259003" expanded="true" signature="7605:8051" ph="INSERT INTO Class... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GoalController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/v1/src/Controllers/GoalController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="253" column="10" selection-start-line="253" selection-start-column="10" selection-end-line="253" selection-end-column="10" />
-              <folding>
-                <element signature="e#136#168#0#PHP" expanded="true" />
-                <marker date="1481164259031" expanded="true" signature="2692:2733" ph="SELECT * FRO... User" />
-                <marker date="1481164259031" expanded="true" signature="3224:3324" ph="SELECT * FRO... Goal" />
-                <marker date="1481164259031" expanded="true" signature="4043:4163" ph="SELECT * FRO... Goal" />
-                <marker date="1481164259031" expanded="true" signature="5010:5193" ph="INSERT INTO Goal... " />
-                <marker date="1481164259031" expanded="true" signature="6527:6588" ph="SELECT * FRO... Goal" />
-                <marker date="1481164259031" expanded="true" signature="7004:7297" ph="UPDATE Goal " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProjectController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v1/src/Controllers/ProjectController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
-              <folding>
-                <element signature="e#161#196#0#PHP" expanded="true" />
-                <marker date="1481164233943" expanded="true" signature="2351:2392" ph="SELECT * FRO... User" />
-                <marker date="1481164233943" expanded="true" signature="2887:2995" ph="SELECT * FRO... Goal" />
-                <marker date="1481164233943" expanded="true" signature="3722:3785" ph="SELECT * FRO... Goal" />
-                <marker date="1481164233943" expanded="true" signature="4593:4741" ph="INSERT INTO Goal... " />
-                <marker date="1481164233943" expanded="true" signature="5873:5920" ph="SELECT * FRO... Project" />
-                <marker date="1481164233943" expanded="true" signature="6292:6507" ph="UPDATE Goal " />
-                <marker date="1481164233943" expanded="true" signature="6292:6516" ph="UPDATE Proje... " />
+                <element signature="e#8#98#0#PHP" expanded="true" />
+                <marker date="1481513669065" expanded="true" signature="4303:4344" ph="SELECT * FRO... User" />
+                <marker date="1481513669065" expanded="true" signature="4931:5032" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="5944:6065" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="7013:7268" ph="INSERT INTO Class... " />
+                <marker date="1481513669065" expanded="true" signature="8398:8443" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="9318:9382" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="9788:10240" ph="UPDATE Class... " />
+                <marker date="1481513669065" expanded="true" signature="11339:11383" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="12118:12182" ph="SELECT * FRO... Class" />
+                <marker date="1481513669065" expanded="true" signature="12594:12686" ph="UPDATE Class... " />
+                <marker date="1481513669065" expanded="true" signature="13023:13067" ph="SELECT * FRO... Class" />
               </folding>
             </state>
           </provider>
@@ -90,54 +62,21 @@
       <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v1/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="113" column="81" selection-start-line="113" selection-start-column="81" selection-end-line="113" selection-end-column="81" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProjectModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v1/src/Models/ProjectModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GoalModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v1/src/Models/GoalModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TokenController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v1/src/Controllers/TokenController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+            <state relative-caret-position="119">
+              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
               <folding>
-                <marker date="1481140262147" expanded="true" signature="658:720" ph="SELECT userh... User" />
+                <element signature="e#7#97#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v1/src/Models/ClassModel.php">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="28" />
-              <folding>
-                <element signature="e#7#99#0#PHP" expanded="true" />
-                <element signature="e#410#689#0#PHP" expanded="false" />
-              </folding>
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,23 +89,26 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/v1/src/Models/TokenModel.php" />
         <option value="$PROJECT_DIR$/v1/src/Models/AuthToken.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/v1/src/Http/StatusCodes.php" />
         <option value="$PROJECT_DIR$/v1/src/Http/Methods.php" />
         <option value="$PROJECT_DIR$/v1/composer.json" />
         <option value="$PROJECT_DIR$/v1/config.php" />
+        <option value="$PROJECT_DIR$/v1/src/Models/TokenModel.php" />
         <option value="$PROJECT_DIR$/v1/src/Utilities/DatabaseConnection.php" />
-        <option value="$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php" />
+        <option value="$PROJECT_DIR$/v1/src/Controllers/ClassController.php" />
+        <option value="$PROJECT_DIR$/v1/src/Controllers/GoalController.php" />
+        <option value="$PROJECT_DIR$/v1/src/Controllers/ProjectController.php" />
         <option value="$PROJECT_DIR$/v1/src/Controllers/TokenController.php" />
+        <option value="$PROJECT_DIR$/v1/src/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/v1/src/Models/ClassModel.php" />
         <option value="$PROJECT_DIR$/v1/src/Models/GoalModel.php" />
         <option value="$PROJECT_DIR$/v1/src/Models/ProjectModel.php" />
-        <option value="$PROJECT_DIR$/v1/src/Controllers/ProjectController.php" />
+        <option value="$PROJECT_DIR$/v1/src/Models/UserModel.php" />
+        <option value="$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php" />
         <option value="$PROJECT_DIR$/v1/api.php" />
-        <option value="$PROJECT_DIR$/v1/src/Controllers/ClassController.php" />
-        <option value="$PROJECT_DIR$/v1/src/Controllers/GoalController.php" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -224,148 +166,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Utilities" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Testing" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Models" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eportfolio" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v1" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -451,7 +251,7 @@
       <updated>1480434925332</updated>
       <workItem from="1480434926780" duration="873000" />
       <workItem from="1480887031669" duration="9754000" />
-      <workItem from="1481137990413" duration="20889000" />
+      <workItem from="1481137990413" duration="44001000" />
     </task>
     <task id="LOCAL-00001" summary="creating">
       <created>1480435586149</created>
@@ -481,22 +281,37 @@
       <option name="project" value="LOCAL" />
       <updated>1481156022541</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Files not on GIT">
+      <created>1481207712411</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1481207712411</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Finished project, added User controller and User Model">
+      <created>1481509024083</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1481509024083</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31516000" />
+    <option name="totallyTimeSpent" value="54628000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25578833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25578833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32917964" sideWeight="0.5022051" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33437175" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32917964" sideWeight="0.49779493" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -546,10 +361,14 @@
     <MESSAGE value="creating" />
     <MESSAGE value="Moved api" />
     <MESSAGE value="Class endpoint completed&#10;Goal endpoint completed except for delete&#10;Project endpoint started" />
-    <option name="LAST_COMMIT_MESSAGE" value="Class endpoint completed&#10;Goal endpoint completed except for delete&#10;Project endpoint started" />
+    <MESSAGE value="Files not on GIT" />
+    <MESSAGE value="Finished project, added User controller and User Model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished project, added User controller and User Model" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -558,18 +377,18 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#7#99#0#PHP" expanded="true" />
-            <element signature="e#135#168#0#PHP" expanded="true" />
-            <marker date="1481164259003" expanded="true" signature="2852:2893" ph="SELECT * FRO... User" />
-            <marker date="1481164259003" expanded="true" signature="3392:3493" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="4219:4340" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="5217:5472" ph="INSERT INTO Class... " />
-            <marker date="1481164259003" expanded="true" signature="7121:7167" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7176" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7177" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7185" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7599:8051" ph="UPDATE Class... " />
-            <marker date="1481164259003" expanded="true" signature="7605:8051" ph="INSERT INTO Class... " />
+            <element signature="e#8#98#0#PHP" expanded="true" />
+            <marker date="1481513669065" expanded="true" signature="4303:4344" ph="SELECT * FRO... User" />
+            <marker date="1481513669065" expanded="true" signature="4931:5032" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="5944:6065" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="7013:7268" ph="INSERT INTO Class... " />
+            <marker date="1481513669065" expanded="true" signature="8398:8443" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="9318:9382" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="9788:10240" ph="UPDATE Class... " />
+            <marker date="1481513669065" expanded="true" signature="11339:11383" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="12118:12182" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="12594:12686" ph="UPDATE Class... " />
+            <marker date="1481513669065" expanded="true" signature="13023:13067" ph="SELECT * FRO... Class" />
           </folding>
         </state>
       </provider>
@@ -587,8 +406,8 @@
         <state relative-caret-position="595">
           <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
           <folding>
-            <element signature="e#7#99#0#PHP" expanded="true" />
-            <element signature="e#410#689#0#PHP" expanded="false" />
+            <element signature="e#7#97#0#PHP" expanded="true" />
+            <element signature="e#408#687#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -597,7 +416,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1479">
           <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -612,7 +433,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -662,32 +485,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v1/src/Utilities/DatabaseConnection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v1/src/Models/TokenModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
-          <folding>
-            <element signature="e#119#157#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Models/AuthToken.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -696,102 +493,186 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Controllers/GoalController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+            <element signature="e#134#166#0#PHP" expanded="true" />
+            <marker date="1481513669124" expanded="true" signature="4141:4182" ph="SELECT * FRO... User" />
+            <marker date="1481513669124" expanded="true" signature="4739:4839" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="5589:5709" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="6614:6797" ph="INSERT INTO Goal... " />
+            <marker date="1481513669124" expanded="true" signature="7623:7663" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="8491:8552" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="8968:9261" ph="UPDATE Goal " />
+            <marker date="1481513669124" expanded="true" signature="10044:10084" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="10810:10869" ph="SELECT * FRO... Goal" />
+            <marker date="1481513669124" expanded="true" signature="11288:11377" ph="UPDATE Goal " />
+            <marker date="1481513669124" expanded="true" signature="11706:11746" ph="SELECT * FRO... Goal" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Controllers/ProjectController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#4#94#0#PHP" expanded="true" />
+            <element signature="e#135#170#0#PHP" expanded="true" />
+            <marker date="1481513669032" expanded="true" signature="3103:3144" ph="SELECT * FRO... User" />
+            <marker date="1481513669032" expanded="true" signature="3710:3818" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="4570:4633" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="5501:5649" ph="INSERT INTO Project... " />
+            <marker date="1481513669032" expanded="true" signature="6305:6354" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="7142:7189" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="7561:7786" ph="UPDATE Proje... " />
+            <marker date="1481513669032" expanded="true" signature="8405:8451" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="9191:9238" ph="SELECT * FRO... Project" />
+            <marker date="1481513669032" expanded="true" signature="9600:9698" ph="UPDATE Proje... " />
+            <marker date="1481513669032" expanded="true" signature="10037:10083" ph="SELECT * FRO... Project" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Models/ClassModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="28" />
+        <state relative-caret-position="119">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
           <folding>
-            <element signature="e#7#99#0#PHP" expanded="true" />
-            <element signature="e#410#689#0#PHP" expanded="false" />
+            <element signature="e#7#97#0#PHP" expanded="true" />
+            <element signature="e#408#687#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Controllers/TokenController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+        <state relative-caret-position="102">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
           <folding>
-            <marker date="1481140262147" expanded="true" signature="658:720" ph="SELECT userh... User" />
+            <element signature="e#6#96#0#PHP" expanded="true" />
+            <element signature="e#133#166#0#PHP" expanded="true" />
+            <marker date="1481513669099" expanded="true" signature="803:872" ph="SELECT userh... User" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+            <element signature="e#133#165#0#PHP" expanded="true" />
+            <marker date="1481513668953" expanded="true" signature="1609:1658" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="3326:3344" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="4047:4092" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="5042:5083" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="5573:5659" ph="INSERT INTO User... " />
+            <marker date="1481513668953" expanded="true" signature="6167:6208" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="7106:7146" ph="SELECT * FRO... User" />
+            <marker date="1481513668953" expanded="true" signature="8553:8664" ph="UPDATE Proje... " />
+            <marker date="1481513668953" expanded="true" signature="8553:8672" ph="UPDATE User " />
+            <marker date="1481513668953" expanded="true" signature="9142:9188" ph="SELECT * FRO... User" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Models/GoalModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="102">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Models/ProjectModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="102">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Models/UserModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Utilities/DatabaseCredentials.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Utilities/DatabaseConnection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v1/src/Models/TokenModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="6" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v1/src/Controllers/ClassController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="218" column="60" selection-start-line="218" selection-start-column="60" selection-end-line="218" selection-end-column="60" />
+        <state relative-caret-position="187">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
           <folding>
-            <element signature="e#7#99#0#PHP" expanded="true" />
-            <element signature="e#135#168#0#PHP" expanded="true" />
-            <marker date="1481164259003" expanded="true" signature="2852:2893" ph="SELECT * FRO... User" />
-            <marker date="1481164259003" expanded="true" signature="3392:3493" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="4219:4340" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="5217:5472" ph="INSERT INTO Class... " />
-            <marker date="1481164259003" expanded="true" signature="7121:7167" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7176" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7177" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7121:7185" ph="SELECT * FRO... Class" />
-            <marker date="1481164259003" expanded="true" signature="7599:8051" ph="UPDATE Class... " />
-            <marker date="1481164259003" expanded="true" signature="7605:8051" ph="INSERT INTO Class... " />
+            <element signature="e#8#98#0#PHP" expanded="true" />
+            <marker date="1481513669065" expanded="true" signature="4303:4344" ph="SELECT * FRO... User" />
+            <marker date="1481513669065" expanded="true" signature="4931:5032" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="5944:6065" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="7013:7268" ph="INSERT INTO Class... " />
+            <marker date="1481513669065" expanded="true" signature="8398:8443" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="9318:9382" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="9788:10240" ph="UPDATE Class... " />
+            <marker date="1481513669065" expanded="true" signature="11339:11383" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="12118:12182" ph="SELECT * FRO... Class" />
+            <marker date="1481513669065" expanded="true" signature="12594:12686" ph="UPDATE Class... " />
+            <marker date="1481513669065" expanded="true" signature="13023:13067" ph="SELECT * FRO... Class" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v1/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="113" column="81" selection-start-line="113" selection-start-column="81" selection-end-line="113" selection-end-column="81" />
+        <state relative-caret-position="119">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#7#97#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v1/src/Controllers/ProjectController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
-          <folding>
-            <element signature="e#161#196#0#PHP" expanded="true" />
-            <marker date="1481164233943" expanded="true" signature="2351:2392" ph="SELECT * FRO... User" />
-            <marker date="1481164233943" expanded="true" signature="2887:2995" ph="SELECT * FRO... Goal" />
-            <marker date="1481164233943" expanded="true" signature="3722:3785" ph="SELECT * FRO... Goal" />
-            <marker date="1481164233943" expanded="true" signature="4593:4741" ph="INSERT INTO Goal... " />
-            <marker date="1481164233943" expanded="true" signature="5873:5920" ph="SELECT * FRO... Project" />
-            <marker date="1481164233943" expanded="true" signature="6292:6507" ph="UPDATE Goal " />
-            <marker date="1481164233943" expanded="true" signature="6292:6516" ph="UPDATE Proje... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v1/src/Controllers/GoalController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="253" column="10" selection-start-line="253" selection-start-column="10" selection-end-line="253" selection-end-column="10" />
-          <folding>
-            <element signature="e#136#168#0#PHP" expanded="true" />
-            <marker date="1481164259031" expanded="true" signature="2692:2733" ph="SELECT * FRO... User" />
-            <marker date="1481164259031" expanded="true" signature="3224:3324" ph="SELECT * FRO... Goal" />
-            <marker date="1481164259031" expanded="true" signature="4043:4163" ph="SELECT * FRO... Goal" />
-            <marker date="1481164259031" expanded="true" signature="5010:5193" ph="INSERT INTO Goal... " />
-            <marker date="1481164259031" expanded="true" signature="6527:6588" ph="SELECT * FRO... Goal" />
-            <marker date="1481164259031" expanded="true" signature="7004:7297" ph="UPDATE Goal " />
-          </folding>
         </state>
       </provider>
     </entry>
