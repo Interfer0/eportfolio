@@ -24,7 +24,7 @@ class TokenController
             die();
         }
         //lookup username to get hash bad request if username is not valid
-        $stmtToken = $dbh->prepare("SELECT userhash FROM User WHERE username =:USER AND active = 1");
+        $stmtToken = $dbh->prepare("SELECT userhash, admin FROM User WHERE username =:USER AND active = 1");
         $stmtToken->bindValue(':USER', $username);
         $stmtToken->execute();
 
@@ -40,12 +40,12 @@ class TokenController
         }
         $user = $stmtToken->fetch(\PDO::FETCH_ASSOC);
         //echo password_hash($password, PASSWORD_DEFAULT);
-        if (password_verify($password, $user['userhash']) != 1) {
+        if (password_verify(strip_tags($password), $user['userhash']) != 1)
+        {
             http_response_code(StatusCodes::UNAUTHORIZED);
             die();
         }
-
-        return (new TokenModel())->buildToken($username);
+        return (new TokenModel())->buildToken($username, $user['admin']);
 
     }
 

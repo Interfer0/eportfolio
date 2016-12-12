@@ -28,7 +28,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
             //Attempt to parse json input
             $json = (object) json_decode(file_get_contents('php://input'));
             if (count((array)$json) >= 2) {
-
                 $username = filter_var($json->username, FILTER_SANITIZE_STRING);
                 $password = $json->password;
             } else {
@@ -103,6 +102,19 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
         return (new Eportfolio\Controllers\ProjectController)->deleteProject($args);
     };
 
+    $handleGetUser  = function($args){
+        return (new Eportfolio\Controllers\UserController)->getUser($args);
+    };
+    $handleGetUserByName  = function($args){
+        return (new Eportfolio\Controllers\UserController)->getUserByName($args);
+    };
+    $handlePostUser = function($args){
+        return (new Eportfolio\Controllers\UserController)->postUser($args);
+    };
+    $handlePatchUser  = function($args){
+        return (new Eportfolio\Controllers\UserController)->patchUser($args);
+    };
+
     $r->addRoute('POST', $baseURI . '/token', $handlePostToken);
 
     $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}/class', $handleGetClass);
@@ -123,6 +135,11 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $r->addRoute('POST', $baseURI . '/user/{USER: [\w\d]+}/class/{CLASS: \d+}/project', $handlePostProject);
     $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handlePatchProject);
     $r->addRoute('DELETE', $baseURI . '/user/{USER: [\w\d]+}/project/{PROJECTID: \d+}', $handleDeleteProject);
+
+    $r->addRoute('GET', $baseURI . '/user', $handleGetUser);
+    $r->addRoute('GET', $baseURI . '/user/{USER: [\w\d]+}', $handleGetUserByName);
+    $r->addRoute('POST', $baseURI . '/user', $handlePostUser);
+    $r->addRoute('PATCH', $baseURI . '/user/{USER: [\w\d]+}', $handlePatchUser);
 
 
 });

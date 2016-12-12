@@ -24,7 +24,7 @@ class TokenModel
      */
     public $token = "";
 
-    public function buildToken($username)
+    public function buildToken($username,$admin = 0)
     {
         $tokenId = uniqid("", true);//TODO: Reset with MCrypt Enabled. //base64_encode(mcrypt_create_iv(32));
         $issuedAt = time();
@@ -39,6 +39,7 @@ class TokenModel
             'exp' => $expire,           // Expire
             'data' => [                  // Data related to the signer user
                 'username' => $username, // User name
+                'admin'=> $admin
             ]
         ];
 
@@ -76,6 +77,16 @@ class TokenModel
         $data = (array)$tokenData['data'];
         return $data['username'];
     }
+
+    public static function getAdminFromToken($jwt = null)
+    {
+        if ($jwt == null)
+            $jwt = self::getBearerTokenFromHeader();
+        $tokenData = static::extractTokenData($jwt);
+        $data = (array)$tokenData['data'];
+        return $data['admin'];
+    }
+
 
     private static function getBearerTokenFromHeader()
     {
