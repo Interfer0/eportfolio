@@ -312,7 +312,6 @@
 
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.send();
-
         if(request.status == 200){
 
             var res = JSON.parse(request.responseText);

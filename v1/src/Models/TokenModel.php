@@ -104,7 +104,7 @@ class TokenModel
             http_response_code(StatusCodes::UNAUTHORIZED);
             exit("No credentials provided.");
         }
-        if ($headers['Authorization'] == 'Bearer null')
+        if ($headers['Authorization'] == 'Bearer NULL' || $headers['Authorization'] == 'Bearer null' )
         {
             http_response_code(StatusCodes::UNAUTHORIZED);
             exit("No credentials provided.");
