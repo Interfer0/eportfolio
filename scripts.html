@@ -39,7 +39,7 @@
         }
         if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         if(request.status == 500)
         {
@@ -77,13 +77,13 @@
 
             var res = JSON.parse(request.responseText);
         }
-        if(request.status == 404)
+        if(request.status == 401)
         {
-            alert("Bad Password");
+            alert("Unauthorized");
         }
         if(request.status == 404)
         {
-            alert("You must login!");
+            alert("Bad Request");
         }
         dump(JSON.parse(request.responseText),"Class Saved:\n");
     }
@@ -107,11 +107,11 @@
         }
         if(request.status == 404)
         {
-            alert("Bad Password");
+            alert("Bad Request");
         }
-        if(request.status == 404)
+        if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         dump(JSON.parse(request.responseText), "Class Deleted:\n");
     }
@@ -149,7 +149,7 @@
         }
         if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         if(request.status == 500)
         {
@@ -183,11 +183,11 @@
         }
         if(request.status == 404)
         {
-            alert("Bad Password");
+            alert("Bad Request");
         }
         if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         if(request.status == 500)
         {
@@ -215,11 +215,11 @@
         }
         if(request.status == 404)
         {
-            alert("Bad Password");
+            alert("Bad Request");
         }
         if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         dump(JSON.parse(request.responseText), "Project Deleted:\n");
     }
@@ -255,7 +255,7 @@
         }
         if(request.status == 401)
         {
-            alert("You must login!");
+            alert("Unauthorized");
         }
         if(request.status == 500)
         {
@@ -266,7 +266,7 @@
 
     function saveGoal(data) {
 
-        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class/" + data.classid;
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/goal/" + data.goalid;
 
         var request = new XMLHttpRequest();
         request.open("PATCH", url, false);
@@ -276,15 +276,11 @@
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.send(JSON.stringify(
                 {
-                    "classname":document.getElementById(data.classid +"classname").value,
-                    "classnumber":document.getElementById(data.classid +"classnumber").value,
-                    "classdescription":document.getElementById(data.classid +"classdescription").value,
-                    "semester":document.getElementById(data.classid +"semester").value,
-                    "year":document.getElementById(data.classid +"year").value,
-                    "grade":document.getElementById(data.classid +"grade").value,
-                    "school":document.getElementById(data.classid +"school").value,
-                    "goal":document.getElementById(data.classid +"goal").value,
-                    "outcome":document.getElementById(data.classid +"outcome").value
+                    "longterm":document.getElementById(data.goalid +"longterm").value,
+                    "goalname":document.getElementById(data.goalid +"goalname").value,
+                    "goaldescription":document.getElementById(data.goalid +"goaldescription").value,
+                    "targetdate":document.getElementById(data.goalid +"targetdate").value,
+                    "completedate":document.getElementById(data.goalid +"completedate").value
                 }
 
         ));
@@ -293,15 +289,15 @@
 
             var res = JSON.parse(request.responseText);
         }
-        if(request.status == 404)
+        if(request.status == 401)
         {
-            alert("Bad Password");
+            alert("Unauthorized");
         }
         if(request.status == 404)
         {
-            alert("You must login!");
+            alert("Bad Request");
         }
-        dump(JSON.parse(request.responseText),"Class Saved:\n");
+        dump(JSON.parse(request.responseText),"Goal Saved:\n");
     }
 
     function deleteGoal(data)
@@ -321,14 +317,15 @@
 
             var res = JSON.parse(request.responseText);
         }
-        if(request.status == 404)
+        if(request.status == 401)
         {
-            alert("Bad Password");
+            alert("Unauthorized");
         }
         if(request.status == 404)
         {
-            alert("You must login!");
+            alert("Bad Request");
         }
+
         dump(JSON.parse(request.responseText), "Class Deleted:\n");
     }
 
@@ -337,13 +334,18 @@
 
     function saveToken()
     {
+        document.cookie = "AUTHENTICATION= NULL";
         var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/token";
         var request = new XMLHttpRequest();
         request.open("POST", url, false);
 
-        request.on
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.send(JSON.stringify({"username":"Daniel", "password":"Password1"}));
+        request.send(JSON.stringify(
+                    {
+                        "username": document.getElementById("username").value,
+                        "password": document.getElementById("password").value
+                    }
+                ));
 
         if(request.status == 200){
             var token = JSON.parse(request.responseText);
@@ -365,6 +367,11 @@
             if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
+    }
+
+    function deleteToken()
+    {
+        document.cookie = "AUTHENTICATION= NULL";
     }
 
 

@@ -15,17 +15,34 @@ echo "<div style='color:black; text-align:center;width:400px;font-size:48px; fon
 echo "</div>";
 
 echo "<div style=' bottom:0; height: 25px;'>";
-//echo '<a href="http://icarus.cs.weber.edu/~db88485/eportfolio/Users.php" class="button gray">Users</a>';
 echo '<a href="http://icarus.cs.weber.edu/~db88485/eportfolio/index.php" class="button gray">Classes</a>';
-//echo '<a href="http://icarus.cs.weber.edu/~db88485/eportfolio/Users.php" class="button gray">Users</a>';
 echo '<a href="http://icarus.cs.weber.edu/~db88485/eportfolio/Goals.php" class="button gray">Goals</a>';
-echo '<form style="display:inline; float:right;">';
-echo '<input style="display: inline;"id="loginButton" class= "button gray" type="button" onclick="saveToken()" value="test"/>';
-echo '</form>';
+if(isset($_COOKIE['AUTHENTICATION']))
+{
+    if($_COOKIE['AUTHENTICATION'] == 'NULL')
+    {
+        echo '<form style="display:inline; float:right;">Username and password displayed for testing purposes only.  ';
+        echo '<input type="text" id="username" value="Daniel"/>';
+        echo '<input type="text" id="password" value="Password1"/>';
+        echo '<input style="display: inline;" id="loginButton" class= "button gray" type="submit" onclick="saveToken()" value="Login"/>';
+        echo '</form>';
+    }
+    else {
+        echo '<form style="display:inline; float:right;">';
+        echo '<input style="display: inline;"id="loginButton" class= "button gray" type="submit" onclick="deleteToken()" value="Logout"/>';
+        echo '</form>';
+    }
+
+} else {
+    echo '<form style="display:inline; float:right;">Username and password displayed for testing purposes only.  ';
+    echo '<input type="text" id="username" value="Daniel"/>';
+    echo '<input type="text" id="password" value="Password1"/>';
+    echo '<input style="display: inline;" id="loginButton" class= "button gray" type="submit" onclick="saveToken()" value="Login"/>';
+    echo '</form>';
+}
 
 //echo "<input type='button' name='login' onclick='login()'>Login</input>";
 echo file_get_contents("scripts.html");
-
 echo "</div>";
 echo "</div>";
 

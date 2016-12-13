@@ -71,10 +71,13 @@ class TokenModel
 
     public static function getUsernameFromToken($jwt = null)
     {
+
         if ($jwt == null)
             $jwt = self::getBearerTokenFromHeader();
         $tokenData = static::extractTokenData($jwt);
         $data = (array)$tokenData['data'];
+
+
         return $data['username'];
     }
 
@@ -98,6 +101,11 @@ class TokenModel
         }
 
         if (!array_key_exists("Authorization", $headers)) {
+            http_response_code(StatusCodes::UNAUTHORIZED);
+            exit("No credentials provided.");
+        }
+        if ($headers['Authorization'] == 'Bearer null')
+        {
             http_response_code(StatusCodes::UNAUTHORIZED);
             exit("No credentials provided.");
         }

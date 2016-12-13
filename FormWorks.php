@@ -53,11 +53,11 @@ function createGoalForm($data)
     <br>
     <form>
     Project ID = ".$data['goalid']."<br>
-    Type of Goal = <input type='textfield' id='".$data['goalid']."goalid' value='".$data['longterm']."'/> *1 for Longterm or 0 for Shorterm.<br>
-    Goal Name = <input type='textfield' id='".$data['goalid']."goalname'  size='128' value='".$data['goalname']."'/><br>
-    Goal Description = <input type='textfield' id='".$data['goalid']."goaldescription' value='".$data['goaldescription']."'/><br>
-    Target Date = <input type='textfield' id='".$data['goalid']."goaldescription' value='".$data['targetdate']."'/><br>
-    Complete Date = <input type='textfield' id='".$data['goalid']."goaldescription' value='".$data['completedate']."'/><br>
+    Timeframe of Goal = <input type='textfield' id='".$data['goalid']."longterm' value='".$data['longterm']."'/> *1 for Longterm or 0 for Shorterm.<br>
+    Goal Name = <input type='textfield' id='".$data['goalid']."goalname' value='".$data['goalname']."'/><br>
+    Goal Description = <input type='textfield' id='".$data['goalid']."goaldescription'  size='128' value='".$data['goaldescription']."'/><br>
+    Target Date = <input type='textfield' id='".$data['goalid']."targetdate' value='".$data['targetdate']."'/><br>
+    Complete Date = <input type='textfield' id='".$data['goalid']."completedate' value='".$data['completedate']."'/><br>
     
     <input type='submit' value='Update' class= \"button gray\" onclick='saveGoal(".json_encode($data).")'/>
     <input type='submit' value='Delete' class= \"button gray\" onclick='deleteGoal(".json_encode($data).")'/>

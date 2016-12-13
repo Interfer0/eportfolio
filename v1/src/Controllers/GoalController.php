@@ -106,9 +106,11 @@ class GoalController
      */
     public function deleteGoal($args)
     {
+
         //check if user is authorized
         if(TokenModel::getUsernameFromToken() != $args['USER'])
         {
+
             http_response_code(StatusCodes::UNAUTHORIZED);
             die();
         }

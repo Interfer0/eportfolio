@@ -42,6 +42,5 @@ if($JSON = @file_get_contents("http://icarus.cs.weber.edu/~db88485/eportfolio/v1
 }
 
 newGoal();
-
 echo "</body>";
 echo "</html>";
