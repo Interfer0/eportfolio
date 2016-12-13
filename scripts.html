@@ -40,6 +40,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 500)
         {
@@ -80,6 +81,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 404)
         {
@@ -112,6 +114,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         dump(JSON.parse(request.responseText), "Class Deleted:\n");
     }
@@ -150,6 +153,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 500)
         {
@@ -188,6 +192,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 500)
         {
@@ -216,10 +221,12 @@
         if(request.status == 404)
         {
             alert("Bad Request");
+
         }
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         dump(JSON.parse(request.responseText), "Project Deleted:\n");
     }
@@ -256,6 +263,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 500)
         {
@@ -292,6 +300,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 404)
         {
@@ -319,6 +328,7 @@
         if(request.status == 401)
         {
             alert("Unauthorized");
+            deleteToken();
         }
         if(request.status == 404)
         {
