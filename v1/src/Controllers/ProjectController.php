@@ -53,11 +53,11 @@ class ProjectController
     /*
      * Patches a project
      * Input:
-     *      {
-     *          "projectname":"Pipeline Project",
-     *          "projectdescription":"Calculate the most cost effective method for a pipeline",
-     *          "projectlink":"www.exxon.com"
-     *      }
+           {
+               "projectname":"Pipeline Project",
+               "projectdescription":"Calculate the most cost effective method for a pipeline",
+               "projectlink":"www.exxon.com"
+           }
      */
     public function editProject($args)
     {
@@ -148,7 +148,7 @@ class ProjectController
         $rtn = array();
         while($now = $stmtGet->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new ProjectModel($now);
+            $rtn[] = json_encode(new ProjectModel($now));
         }
         if(count($rtn) == 0)
         {
@@ -176,7 +176,7 @@ class ProjectController
         $rtn = array();
         while($now = $stmtGet->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new ProjectModel($now);
+            $rtn[] = json_encode(new ProjectModel($now));
         }
         if(count($rtn) == 0)
         {

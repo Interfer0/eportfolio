@@ -11,16 +11,16 @@ require_once 'FormWorks.php';
 include_once 'scripts.html';
 include_once 'MyFunctions.php';
 echo "<html>";
-    echo "<head>";
-        echo "<title>Eportfolio demonstation</title>";
-        echo '<link href="'.$myCss.'" rel="stylesheet" type="text/css">';
-        echo '<link rel="shortcut icon" href="'.$myIcon.'">';
-    echo "</head>";
+echo "<head>";
+echo "<title>Eportfolio demonstation</title>";
+echo '<link href="'.$myCss.'" rel="stylesheet" type="text/css">';
+echo '<link rel="shortcut icon" href="'.$myIcon.'">';
+echo "</head>";
 
-    echo "<body>";
-        include 'Header.php'; //load header bar
-        echo '<div id="maincolumn">';
-        include 'APINav.php';
+echo "<body>";
+include 'Header.php'; //load header bar
+echo '<div id="maincolumn">';
+include 'APINav.php';
 
 if($JSON = @file_get_contents("http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class")) {
     if($JSON != FALSE) {
@@ -59,5 +59,5 @@ if($JSON = @file_get_contents("http://icarus.cs.weber.edu/~db88485/eportfolio/v1
 }
 newClass();
 
-    echo "</body>";
+echo "</body>";
 echo "</html>";

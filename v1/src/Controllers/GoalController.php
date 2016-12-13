@@ -80,13 +80,13 @@ class GoalController
      * Edits a Goal
      *
      * Input JSON:
-     * {
-     *      "longterm":"0",
-     *      "goalname":"Take Over World2",
-     *      "goaldescription":"The same thing we do every night",
-     *      "targetdate":"fall 2017",
-     *      "completedate":"summer 2019"
-     *  }
+      {
+           "longterm":"0",
+           "goalname":"Take Over World2",
+           "goaldescription":"The same thing we do every night",
+           "targetdate":"fall 2017",
+           "completedate":"summer 2019"
+       }
      */
     public function editGoal($args)
     {
@@ -184,7 +184,7 @@ class GoalController
         $rtn = array();
         while($now = $stmtGet->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new GoalModel($now);
+            $rtn[] = json_encode(new GoalModel($now));
         }
         if(count($rtn) == 0)
         {
@@ -213,7 +213,7 @@ class GoalController
         $rtn = array();
         while($now = $stmtGet->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new GoalModel($now);
+            $rtn[] = json_encode(new GoalModel($now));
         }
         if(count($rtn) == 0)
         {

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<script>
+
+    function newClass()
+    {
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class";
+
+        var request = new XMLHttpRequest();
+        request.open("POST", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                    "classname":"Enter a Class Name",
+                    "classnumber":"Class Number",
+                    "classdescription":"Enter a Description",
+                    "semester":"fall",
+                    "year":"1",
+                    "grade":"A",
+                    "school":"Enter a School",
+                    "goal":"Enter a Goal",
+                    "outcome":"Enter an Outcome"
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Request");
+        }
+        if(request.status == 401)
+        {
+            alert("You must login!");
+        }
+        if(request.status == 500)
+        {
+            alert("Check JSON?");
+        }
+        dump(JSON.parse(request.responseText),"Class Created:\n");
+    }
+
+    function saveClass(data) {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class/" + data.classid;
+
+        var request = new XMLHttpRequest();
+        request.open("PATCH", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                    "classname":document.getElementById(data.classid +"classname").value,
+                    "classnumber":document.getElementById(data.classid +"classnumber").value,
+                    "classdescription":document.getElementById(data.classid +"classdescription").value,
+                    "semester":document.getElementById(data.classid +"semester").value,
+                    "year":document.getElementById(data.classid +"year").value,
+                    "grade":document.getElementById(data.classid +"grade").value,
+                    "school":document.getElementById(data.classid +"school").value,
+                    "goal":document.getElementById(data.classid +"goal").value,
+                    "outcome":document.getElementById(data.classid +"outcome").value
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 404)
+        {
+            alert("You must login!");
+        }
+        dump(JSON.parse(request.responseText),"Class Saved:\n");
+    }
+
+    function deleteClass(data)
+    {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class/" + data.classid;
+
+        var request = new XMLHttpRequest();
+        request.open("DELETE", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send();
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 404)
+        {
+            alert("You must login!");
+        }
+        dump(JSON.parse(request.responseText), "Class Deleted:\n");
+    }
+
+
+
+    function newProject(data)
+    {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class/"+ data.classid +"/project";
+
+        var request = new XMLHttpRequest();
+        request.open("POST", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                        "projectname":"Enter a Project Name",
+                        "projectdescription":"Enter a Project Description",
+                        "projectlink":"Enter a project link"
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Request");
+            dump(request);
+        }
+        if(request.status == 401)
+        {
+            alert("You must login!");
+        }
+        if(request.status == 500)
+        {
+            alert("Check JSON?");
+        }
+        dump(JSON.parse(request.responseText), "Project Created:\n");
+    }
+
+    function saveProject(data) {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/project/" + data.projectid;
+
+        var request = new XMLHttpRequest();
+        request.open("PATCH", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                        "projectname":document.getElementById(data.projectid +"projectname").value,
+                        "projectdescription":document.getElementById(data.projectid +"projectdescription").value,
+                        "projectlink":document.getElementById(data.projectid +"projectlink").value
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 401)
+        {
+            alert("You must login!");
+        }
+        if(request.status == 500)
+        {
+            alert("Check JSON?");
+        }
+        dump(JSON.parse(request.responseText), "Project Saved:\n");
+    }
+
+    function deleteProject(data)
+    {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/project/" + data.projectid;
+
+        var request = new XMLHttpRequest();
+        request.open("DELETE", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send();
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 401)
+        {
+            alert("You must login!");
+        }
+        dump(JSON.parse(request.responseText), "Project Deleted:\n");
+    }
+
+    function newGoal()
+    {
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/goal";
+
+        var request = new XMLHttpRequest();
+        request.open("POST", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                    "longterm":"0",
+                    "goalname":"Enter a Goal Name",
+                    "goaldescription":"Enter a Goal Description",
+                    "targetdate":"Enter a Target Date",
+                    "completedate":"Enter a date if Complere"
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Request");
+        }
+        if(request.status == 401)
+        {
+            alert("You must login!");
+        }
+        if(request.status == 500)
+        {
+            alert("Check JSON?");
+        }
+        dump(JSON.parse(request.responseText),"Goal Created:\n");
+    }
+
+    function saveGoal(data) {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/class/" + data.classid;
+
+        var request = new XMLHttpRequest();
+        request.open("PATCH", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify(
+                {
+                    "classname":document.getElementById(data.classid +"classname").value,
+                    "classnumber":document.getElementById(data.classid +"classnumber").value,
+                    "classdescription":document.getElementById(data.classid +"classdescription").value,
+                    "semester":document.getElementById(data.classid +"semester").value,
+                    "year":document.getElementById(data.classid +"year").value,
+                    "grade":document.getElementById(data.classid +"grade").value,
+                    "school":document.getElementById(data.classid +"school").value,
+                    "goal":document.getElementById(data.classid +"goal").value,
+                    "outcome":document.getElementById(data.classid +"outcome").value
+                }
+
+        ));
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 404)
+        {
+            alert("You must login!");
+        }
+        dump(JSON.parse(request.responseText),"Class Saved:\n");
+    }
+
+    function deleteGoal(data)
+    {
+
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/user/Daniel/goal/" + data.goalid;
+
+        var request = new XMLHttpRequest();
+        request.open("DELETE", url, false);
+
+        request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send();
+
+        if(request.status == 200){
+
+            var res = JSON.parse(request.responseText);
+        }
+        if(request.status == 404)
+        {
+            alert("Bad Password");
+        }
+        if(request.status == 404)
+        {
+            alert("You must login!");
+        }
+        dump(JSON.parse(request.responseText), "Class Deleted:\n");
+    }
+
+
+
+
+    function saveToken()
+    {
+        var url = "http://icarus.cs.weber.edu/~db88485/eportfolio/v1/token";
+        var request = new XMLHttpRequest();
+        request.open("POST", url, false);
+
+        request.on
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(JSON.stringify({"username":"Daniel", "password":"Password1"}));
+
+        if(request.status == 200){
+            var token = JSON.parse(request.responseText);
+        }
+        if(request.status == 401)
+        {
+            alert("Bad Password");
+        }
+        document.cookie = "AUTHENTICATION=" + token;
+    }
+
+    function getToken()
+    {
+        var nameEQ = "AUTHENTICATION=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+
+    function dump(obj, message) {
+        var out = '';
+        for (var i in obj) {
+            out += i + ": " + obj[i] + "\n";
+        }
+        if(typeof message === 'undefined')
+        {
+            message = "";
+        }
+
+        alert(message + out);
+
+        // or, if you wanted to avoid alerts...
+
+        var pre = document.createElement('pre');
+        pre.innerHTML = out;
+        document.body.appendChild(pre)
+    }
+
+</script>
+
+</body>
+</html>

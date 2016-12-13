@@ -82,17 +82,17 @@ class ClassController
     /*
      * Patch a class for a user
      * JSON Format:
-     *      {
-     *          "classname":"French",
-     *          "classnumber":"FR 2013",
-     *          "classdescription":"Pardon my French",
-     *          "semester":"fall",
-     *          "year":"2016",
-     *          "grade":"F-",
-     *          "school":"Weber State",
-     *          "goal":"Not swear!",
-     *          "outcome":"Golden"
-     *      }
+           {
+               "classname":"French",
+               "classnumber":"FR 2013",
+               "classdescription":"Pardon my French",
+               "semester":"fall",
+               "year":"2016",
+               "grade":"F-",
+               "school":"Weber State",
+               "goal":"Not swear!",
+               "outcome":"Golden"
+           }
      */
     public function editClass($args)
     {
@@ -141,7 +141,7 @@ class ClassController
         )
         {
             http_response_code(StatusCodes::BAD_REQUEST);
-            die("check your input JSON and try again");
+            die("check your input JSON and try again ");
         }
         return $input;
     }
@@ -187,7 +187,7 @@ class ClassController
         $rtn = array();
         while($now = $stmtGetClass->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new ClassModel($now);
+            $rtn[] = json_encode(new ClassModel($now));
         }
         if(count($rtn) == 0)
         {
@@ -221,7 +221,7 @@ class ClassController
         $rtn = array();
         while($now = $stmtGetClass->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new ClassModel($now);
+            $rtn[] = json_encode(new ClassModel($now));
         }
         if(count($rtn) == 0)
         {

@@ -130,7 +130,7 @@ class UserController
         $rtn = array();
         while($now = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new UserModel($now);
+            $rtn[] = json_encode(new UserModel($now));
         }
         if(count($rtn) == 0)
         {
@@ -159,7 +159,7 @@ class UserController
         $rtn = array();
         while($now = $stmtGetClasses->fetch(\PDO::FETCH_ASSOC))
         {
-            $rtn[] = new UserModel($now);
+            $rtn[] = json_encode(new UserModel($now));
         }
         if(count($rtn) == 0)
         {
